@@ -1,3 +1,4 @@
+include(":common")
 include(":app")
 
-rootProject.name = "penDo"
+rootProject.name = "Pendo"
