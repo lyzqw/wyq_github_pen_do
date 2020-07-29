@@ -1,4 +1,4 @@
-package com.wyq.common
+package com.wyq.common.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
