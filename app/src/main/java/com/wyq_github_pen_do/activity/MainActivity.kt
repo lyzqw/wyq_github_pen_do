@@ -8,7 +8,7 @@ import com.wyq_github_pen_do.fragment.MainFragment
 /**
  * 主页
  *
- * todo 状态栏的显示, 内存泄漏, 换肤
+ * todo 状态栏的显示, 内存泄漏, 换肤, room与databing的双向绑定
  */
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
