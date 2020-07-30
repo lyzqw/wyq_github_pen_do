@@ -15,6 +15,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         window.decorView.postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }, 100)
+        }, 300)
+    }
+
+    override fun initView() {
+
+    }
+
+    override fun loadData() {
     }
 }

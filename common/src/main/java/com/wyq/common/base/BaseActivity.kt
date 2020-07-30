@@ -7,11 +7,19 @@ import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<ViewDB : ViewDataBinding> : AppCompatActivity() {
 
-    abstract val layoutId: Int
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ViewDB>(this, layoutId)
+        val binding = DataBindingUtil.setContentView<ViewDB>(this, layoutId)
+        binding.lifecycleOwner = this
+
+        initView()
+        loadData()
     }
+
+    abstract val layoutId: Int
+
+    abstract fun initView()
+
+    abstract fun loadData()
 
 }
