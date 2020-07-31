@@ -36,6 +36,7 @@ class NoteTitleEditView : AppCompatEditText {
         paint.style = Paint.Style.STROKE
         paint.color = Color.BLACK
         paint.strokeWidth = SizeUtils.dp2px(1f).toFloat()
+        addTextChangedListener(InnerTextChanged())
     }
 
 
@@ -45,14 +46,32 @@ class NoteTitleEditView : AppCompatEditText {
             rect.setEmpty()
             getLineBounds(line, rect)
             val y = rect.bottom - SizeUtils.dp2px(1f).toFloat()
-            Timber.d("onDraw.rect:  ${rect.toString()}")
+            val lineWidth = layout?.getLineWidth(line) ?: (this.width).toFloat()
             canvas.drawLine(
                 0F,
                 y,
-                (this.width - 2).toFloat(), y, paint
+                lineWidth, y, paint
             )
         }
     }
 
+    inner class InnerTextChanged : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            Timber.d("afterTextChanged ${s.toString()}")
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            Timber.d("beforeTextChanged ${s.toString()}")
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            Timber.d("onTextChanged ${s.toString()}")
+
+            Timber.d("onTextChanged.lineCount: $lineCount")
+            if (lineCount > 3) {
+                text?.delete(selectionEnd - 1, selectionStart)
+            }
+        }
+    }
 }
 
