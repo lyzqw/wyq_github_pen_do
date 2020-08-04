@@ -1,12 +1,14 @@
 package com.wyq_github_pen_do.fragment
 
-import androidx.fragment.app.Fragment
-import com.blankj.utilcode.util.ActivityUtils
 import com.wyq.common.base.BaseFragment
+import com.wyq.common.model.DefaultNoteConfig
+import com.wyq.common.model.Note
+import com.wyq.common.model.NoteFactory
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.activity.NoteActivity
 import com.wyq_github_pen_do.databinding.FragmentMainBinding
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.util.*
 
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {
@@ -15,7 +17,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override fun initView() {
         new_note.setOnClickListener {
-            ActivityUtils.startActivity(NoteActivity::class.java)
+
+            val factory: Note.Factory =
+                NoteFactory(UUID.randomUUID().toString(), DefaultNoteConfig.EditMode.EDIT_AUTO_CAN)
+            NoteActivity.start(factory.build())
         }
     }
 

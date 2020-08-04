@@ -19,7 +19,7 @@ class ApplicationController : Application() {
 
         startKoin {
             androidContext(this@ApplicationController)
-            modules(BaseModule.loadFeature)
+            modules(AppModule.loadFeature)
         }
 
         if (BuildConfig.DEBUG) {
