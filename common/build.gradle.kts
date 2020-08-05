@@ -56,6 +56,8 @@ dependencies {
     api ("com.jakewharton.timber:timber:4.7.1")
     //tools
     api ("com.blankj:utilcodex:1.29.0")
+    //键盘
+    api ("cn.dreamtobe.kpswitch:library:1.6.1")
 
 
     testImplementation("junit:junit:4.13")

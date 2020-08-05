@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.wyq_github_pen_do.viewmodel.NoteViewModel" />
+
     </data>
 
 
@@ -15,13 +19,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="16dp"
             android:paddingTop="16dp">
 
             <com.wyq.common.widget.NoteTitleEditView
                 android:id="@+id/note_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:background="@null"
                 android:hint="写标题?"
                 android:maxLines="3"
@@ -30,6 +34,33 @@
                 android:textSize="25sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="@+id/note_title"
+                app:layout_constraintTop_toBottomOf="@+id/note_title"
+                android:text="@{viewModel.noteTitle}"
+                tools:text="2020-5-4" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_wheel"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
