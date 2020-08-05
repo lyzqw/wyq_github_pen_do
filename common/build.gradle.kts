@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -30,13 +31,34 @@ android {
 }
 
 dependencies {
-    val kotlin_version = "1.3.72"
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    testImplementation("junit:junit:4.12")
+
+    val kotlin_version = "1.3.72"
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
+
+    //携程
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.4")
+    //appcompat
+    api("androidx.appcompat:appcompat:1.1.0")
+    api("androidx.core:core-ktx:1.3.1")
+    api("androidx.constraintlayout:constraintlayout:1.1.3")
+    api("com.tencent.bugly:crashreport:3.2.1")
+    api("com.tencent.bugly:nativecrashreport:3.7.1")
+    //room
+    api("androidx.room:room-runtime:2.2.5")
+    kapt("androidx.room:room-compiler:2.2.5")
+    //koin
+    api("org.koin:koin-android:2.1.6")
+    api("org.koin:koin-androidx-scope:2.1.6")
+    api("org.koin:koin-androidx-viewmodel:2.1.6")
+    //log
+    api ("com.jakewharton.timber:timber:4.7.1")
+    //tools
+    api ("com.blankj:utilcodex:1.29.0")
+
+
+    testImplementation("junit:junit:4.13")
     androidTestImplementation("androidx.test:runner:1.2.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }
