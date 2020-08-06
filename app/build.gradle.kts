@@ -2,11 +2,12 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
     compileSdkVersion(28)
-    buildToolsVersion("28")
+    buildToolsVersion("28.0.3")
 
     defaultConfig {
         applicationId = "com.wyq_github_pen_do"
