@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pendo</string>
+    <string name="text_diary">日记</string>
+    <string name="tv_note">笔记</string>
+    <string name="tv_pending">待办</string>
+    <string name="tv_schedule">日程</string>
 </resources>

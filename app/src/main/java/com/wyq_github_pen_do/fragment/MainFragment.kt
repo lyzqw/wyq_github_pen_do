@@ -21,12 +21,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private val mNoteDao by inject<NoteDao>()
 
-
     override fun layoutId(): Int = R.layout.fragment_main
 
     override fun initView() {
         new_note.setOnClickListener {
-
             val factory: Note.Factory =
                 NoteFactory(UUID.randomUUID().toString(), DefaultNoteConfig.EditMode.EDIT_AUTO_CAN)
             NoteActivity.start(factory.build())
@@ -34,16 +32,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     }
 
     override fun initData() {
-
     }
 
     override fun initListener() {
-
-        query.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                println(mNoteDao.findAll())
-            }
-        }
     }
 
 

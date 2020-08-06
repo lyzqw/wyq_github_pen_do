@@ -48,6 +48,7 @@ dependencies {
     api("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
     api("com.tencent.bugly:crashreport:3.2.1")
     api("com.tencent.bugly:nativecrashreport:3.7.1")
+    api("androidx.recyclerview:recyclerview:1.1.0")
 
     //room
     api("androidx.room:room-runtime:2.2.5")
