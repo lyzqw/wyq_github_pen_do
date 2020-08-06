@@ -3,6 +3,7 @@ package com.wyq_github_pen_do.activity
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.wyq.common.base.BaseActivity
+import com.wyq.common.ext.value
 import com.wyq.common.model.NoteConfig
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.databinding.ActivityNoteBinding
@@ -15,6 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class NoteActivity : BaseActivity<ActivityNoteBinding>() {
 
+    private var noteId: String = ""
     private val mViewModel by viewModel<NoteViewModel>()
 
     companion object {
@@ -36,18 +38,18 @@ class NoteActivity : BaseActivity<ActivityNoteBinding>() {
     override val layoutId: Int = R.layout.activity_note
 
     override fun initView() {
-        //mViewModel.toString()
+        noteId = intent?.getStringExtra(KEY_NOTE_ID).value()
         supportFragmentManager.beginTransaction()
             .add(R.id.note_container, NoteFragment(), "note_fragment").commitAllowingStateLoss()
     }
 
     override fun loadData() {
-
     }
 
 
     override fun finish() {
         super.finish()
+        mViewModel.saveNoteWhenFinish(noteId)
     }
 
 }

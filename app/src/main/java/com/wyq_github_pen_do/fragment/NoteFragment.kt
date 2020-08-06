@@ -1,14 +1,15 @@
 package com.wyq_github_pen_do.fragment
 
+import android.text.Editable
 import com.wyq.common.base.BaseFragment
 import com.wyq.common.ext.value
 import com.wyq_github_pen_do.R
+import com.wyq_github_pen_do.`interface`.SimpleTextWatcherListener
 import com.wyq_github_pen_do.activity.NoteActivity.Companion.AUTO_EDIT_NOTE
-import com.wyq_github_pen_do.databinding.FragmentMainBinding
 import com.wyq_github_pen_do.databinding.FragmentNoteBinding
 import com.wyq_github_pen_do.viewmodel.NoteViewModel
+import kotlinx.android.synthetic.main.fragment_note.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -26,6 +27,18 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>() {
 
     override fun initData() {
         mViewModel.setHasEditNote(activity?.intent?.getBooleanExtra(AUTO_EDIT_NOTE, true).value())
+    }
+
+    override fun initListener() {
+        tv_note_content.addTextChangedListener(object : SimpleTextWatcherListener() {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
+        iv_star.setOnClickListener {
+            mViewModel.loadData()
+        }
     }
 
 

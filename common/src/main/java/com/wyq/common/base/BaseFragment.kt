@@ -26,9 +26,12 @@ abstract class BaseFragment<ViewDB : ViewDataBinding> : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initView()
         initData()
+        initListener()
     }
+
 
     abstract fun layoutId(): Int
     abstract fun initView()
     abstract fun initData()
+    abstract fun initListener()
 }

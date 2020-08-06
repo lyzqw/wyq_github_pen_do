@@ -9,7 +9,7 @@ data class NoteEntity(
     /**
      * 默认表自增id
      */
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int? = null,
 
@@ -23,5 +23,11 @@ data class NoteEntity(
      * 笔记title
      */
     @ColumnInfo(name = "title")
-    var title: String? = ""
+    var title: String? = "",
+
+    /**
+     * 笔记content
+     */
+    @ColumnInfo(name = "content")
+    var content: String? = ""
 )
