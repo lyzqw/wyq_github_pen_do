@@ -8,6 +8,7 @@ import com.bumptech.glide.util.LogTime
 import com.wyq.common.base.BaseViewModel
 import com.wyq.common.database.NoteDao
 import com.wyq.common.database.NoteEntity
+import com.wyq.common.enum.NoteTypeEnum
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
@@ -37,6 +38,7 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
 
 
     fun setHasEditNote(hasEditNote: Boolean) {
+        //todo 取出正确的时间
         _hasEditNote.postValue(hasEditNote)
     }
 
@@ -45,8 +47,10 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
             viewModelScope.launch(Dispatchers.IO) {
                 val start = LogTime.getLogTime()
                 val noteEntity = NoteEntity(
+                    type_note = NoteTypeEnum.TYPE_DIARY.code,
                     noteId = noteId,
                     title = noteTitle.value,
+                    create_date = System.currentTimeMillis().toString(),
                     content = noteContent.value
                 )
                 mNoteDao.insert(noteEntity)
