@@ -1,34 +1,25 @@
-package com.wyq.common.database
+package com.wyq.common.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+data class NoteListBean(
 
-@Entity(tableName = "note_table")
-data class NoteEntity(
     /**
-     * 默认表自增id
+     * itemType
      */
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int? = null,
+    var itemType: Int,
 
     /**
      * 笔记唯一标识
      */
-    @ColumnInfo(name = "note_id")
     var noteId: String? = "",
+
 
     /**
      * 笔记title
      */
-    @ColumnInfo(name = "title")
     var title: String? = "",
-
     /**
      * 笔记content
      */
-    @ColumnInfo(name = "content")
     var content: String? = "",
 
     /**
@@ -46,14 +37,10 @@ data class NoteEntity(
      */
     var tag_content: String? = "",
 
-    /**
-     * 笔记的类型 {@link com.wyq.common.enum.NoteTypeEnum}
-     */
-    var type_note: Int,
+
     /**
      * 笔记图片
      */
     var note_image: String? = ""
 
-
-)
+) : BaseNoteListBean()

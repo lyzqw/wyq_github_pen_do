@@ -4,8 +4,8 @@
 
 ## Change log
 
-[Flutter Dojo Change Log](https://github.com/xuyisheng/flutter_dojo/blob/master/CHANGELOG.md)
+[Flutter Dojo Change Log](https://github.com/lyzqw/wyq_github_pen_do/master/CHANGELOG.md)
 
 ## 体验APK
 
-[Github Actions APK download](https://github.com/xuyisheng/flutter_dojo/releases)
+[Github Actions APK download](https://github.com/lyzqw/wyq_github_pen_do/releases)

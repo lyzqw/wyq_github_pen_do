@@ -9,13 +9,14 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<ViewDB : ViewDataBinding> : Fragment() {
+    protected lateinit var binding: ViewDB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<ViewDB>(inflater, layoutId(), container, false)
+        binding = DataBindingUtil.inflate<ViewDB>(inflater, layoutId(), container, false)
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -25,9 +26,12 @@ abstract class BaseFragment<ViewDB : ViewDataBinding> : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initView()
         initData()
+        initListener()
     }
+
 
     abstract fun layoutId(): Int
     abstract fun initView()
     abstract fun initData()
+    abstract fun initListener()
 }

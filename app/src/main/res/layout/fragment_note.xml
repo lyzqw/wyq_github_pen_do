@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.wyq_github_pen_do.viewmodel.NoteViewModel" />
+
     </data>
 
 
@@ -15,21 +19,64 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="16dp"
             android:paddingTop="16dp">
 
             <com.wyq.common.widget.NoteTitleEditView
                 android:id="@+id/note_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:background="@null"
                 android:hint="写标题?"
                 android:maxLines="3"
+                android:text="@={viewModel.noteTitle}"
                 android:textColor="@color/black_333333"
                 android:textColorHint="@color/gray_999999"
                 android:textSize="25sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{viewModel.noteDate}"
+                app:layout_constraintLeft_toLeftOf="@+id/note_title"
+                app:layout_constraintTop_toBottomOf="@+id/note_title"
+                tools:text="2020-5-4" />
+
+
+            <EditText
+                android:id="@+id/tv_note_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:gravity="left|top"
+                android:text="@={viewModel.noteContent}"
+                app:layout_constraintBottom_toTopOf="@+id/cl_bottom_panel"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date"
+                app:setEditContent="@{viewModel.noteTitle}" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_bottom_panel"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/iv_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_wheel"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
