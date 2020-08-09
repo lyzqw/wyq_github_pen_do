@@ -18,7 +18,6 @@ import com.wyq_github_pen_do.databinding.FragmentMainBinding
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.include_main_layer.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -51,7 +50,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private fun createNoteListBean(entity: NoteEntity) =
         NoteListBean(
-            NoteTypeEnum.TYPE_DIARY.code,
+            NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
             entity.noteId,
             entity.title,
             entity.content,

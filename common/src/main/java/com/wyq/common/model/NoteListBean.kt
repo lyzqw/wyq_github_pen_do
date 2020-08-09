@@ -5,7 +5,7 @@ data class NoteListBean(
     /**
      * itemType
      */
-    var itemType: Int,
+    var type: Int,
 
     /**
      * 笔记唯一标识
