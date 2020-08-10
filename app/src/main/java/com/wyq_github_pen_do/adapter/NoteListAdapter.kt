@@ -1,6 +1,7 @@
 package com.wyq_github_pen_do.adapter
 
 import android.view.ViewGroup
+import android.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.wyq.common.base.BaseViewHolder
@@ -14,7 +15,7 @@ class NoteListAdapter : ListAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCa
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
-            NoteTypeEnum.TYPE_DIARY.code -> {
+            NoteTypeEnum.TYPE_DIARY_STYLE_1.code -> {
                 return DiaryViewHolder.create(parent)
             }
             else -> return DiaryViewHolder.create(parent)
@@ -32,7 +33,7 @@ class NoteListAdapter : ListAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCa
 
 
     override fun getItemViewType(position: Int): Int {
-        return currentList[position].itemType
+        return currentList[position].type
     }
 
     fun setNewData(dataList: List<NoteListBean>) {

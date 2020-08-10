@@ -14,6 +14,10 @@ data class NoteEntity(
     var id: Int? = null,
 
     /**
+     * 笔记的类型 {@link com.wyq.common.enum.NoteTypeEnum}
+     */
+    var type: Int,
+    /**
      * 笔记唯一标识
      */
     @ColumnInfo(name = "note_id")
@@ -46,10 +50,6 @@ data class NoteEntity(
      */
     var tag_content: String? = "",
 
-    /**
-     * 笔记的类型 {@link com.wyq.common.enum.NoteTypeEnum}
-     */
-    var type_note: Int,
     /**
      * 笔记图片
      */
