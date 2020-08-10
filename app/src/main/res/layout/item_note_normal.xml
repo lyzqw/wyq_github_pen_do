@@ -7,13 +7,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
-
+        android:layout_height="35dp">
 
 
         <include
             android:id="@+id/layout_note_date"
             layout="@layout/item_note_left_date" />
+
 
         <ImageView
             android:id="@+id/image_note_type_logo"
@@ -28,11 +28,11 @@
         <View
             android:layout_width="10dp"
             android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
             android:background="@color/gray_999999"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/image_note_type_logo"
             app:layout_constraintTop_toTopOf="parent" />
-
 
 
         <include

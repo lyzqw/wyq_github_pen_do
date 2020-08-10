@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.wyq.common.R
+import com.wyq.common.ext.MAIN_BOTTOM_CORNER_SIZE
 import com.wyq.common.ext.getShapeDrawable
 import kotlinx.android.synthetic.main.layout_main_bottom_button.view.*
 
@@ -28,7 +29,7 @@ class MainBottomButtonLayout : FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.layout_main_bottom_button, this, true)
 
         val shapeDrawable = getShapeDrawable(
-            SizeUtils.dp2px(16f).toFloat(),
+            SizeUtils.dp2px(MAIN_BOTTOM_CORNER_SIZE).toFloat(),
             ColorUtils.getColor(R.color.gray_C3C3C3)
         )
         tv_diary.background = shapeDrawable

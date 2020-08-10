@@ -1,7 +1,16 @@
 <resources>
 
 
-    <style name="LayoutMainBottomButton">
+    <style name="LayoutMainBottomButton" parent="TextSize_10_white">
+    </style>
+
+    <style name="TextSize_11_white">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/white_255</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextSize_10_white">
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/white_255</item>
         <item name="android:gravity">center</item>

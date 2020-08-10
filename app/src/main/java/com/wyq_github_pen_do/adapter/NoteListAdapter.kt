@@ -1,7 +1,6 @@
 package com.wyq_github_pen_do.adapter
 
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.wyq.common.base.BaseViewHolder

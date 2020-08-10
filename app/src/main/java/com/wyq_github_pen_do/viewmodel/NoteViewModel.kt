@@ -10,6 +10,7 @@ import com.wyq.common.database.NoteDao
 import com.wyq.common.database.NoteEntity
 import com.wyq.common.enum.NoteTypeEnum
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
@@ -22,7 +23,7 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
     private val mNoteDao by inject<NoteDao>()
 
     private var _hasEditNote = MutableLiveData<Boolean>()
-    val hasEditNote: LiveData<Boolean> = _hasEditNote
+    private val hasEditNote: LiveData<Boolean> = _hasEditNote
 
     //日期
     private var _noteDate = MutableLiveData<String>()
@@ -49,7 +50,7 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
             viewModelScope.launch(Dispatchers.IO) {
                 val start = LogTime.getLogTime()
                 val noteEntity = NoteEntity(
-                    type_note = NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
+                    type = NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
                     noteId = noteId,
                     title = noteTitle.value,
                     create_date = System.currentTimeMillis().toString(),
