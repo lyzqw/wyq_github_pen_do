@@ -15,7 +15,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutId: Int = R.layout.activity_main
 
     override fun initView() {
-        supportFragmentManager.beginTransaction().add(R.id.main_container,MainFragment(),"main_fragment").commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_container, MainFragment(), "main_fragment").commitAllowingStateLoss()
     }
 
     override fun loadData() {

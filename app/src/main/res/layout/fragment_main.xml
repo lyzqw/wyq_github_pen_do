@@ -11,6 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.wyq.common.widget.DivisionView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_main"
@@ -18,6 +23,7 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:paddingTop="80dp"
+            tools:listitem="@layout/item_note_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

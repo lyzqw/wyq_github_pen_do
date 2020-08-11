@@ -1,5 +1,6 @@
 package com.wyq_github_pen_do.fragment
 
+import android.graphics.Canvas
 import android.graphics.Rect
 import android.util.Log
 import android.view.View
@@ -51,8 +52,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 parent: RecyclerView,
                 state: RecyclerView.State
             ) {
-                super.getItemOffsets(outRect, view, parent, state)
                 outRect.top = SizeUtils.dp2px(20f)
+            }
+
+            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                Log.d("main_recyc", "onDraw: "+parent.measuredHeight)
             }
         })
         recycler_main.layoutManager = LinearLayoutManager(context)
@@ -69,7 +73,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         )
         tv_main_today.text = date + TimeUtils.getChineseWeek(System.currentTimeMillis())
         tv_main_today.background =
-            getShapeDrawable(30f, ColorUtils.getColor(R.color.gray_C3C3C3))
+            getShapeDrawable(30f, ColorUtils.getColor(R.color.gray_999999))
     }
 
     override fun initData() {

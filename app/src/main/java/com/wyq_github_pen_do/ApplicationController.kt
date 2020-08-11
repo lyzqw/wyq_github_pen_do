@@ -3,7 +3,6 @@ package com.wyq_github_pen_do
 import android.app.Application
 import com.blankj.utilcode.util.Utils
 import com.tencent.bugly.crashreport.CrashReport
-import com.wyq.common.di.BaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber

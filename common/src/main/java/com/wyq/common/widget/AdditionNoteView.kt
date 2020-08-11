@@ -37,7 +37,7 @@ class AdditionNoteView : View {
 
     init {
         circlePaint.style = Paint.Style.STROKE
-        circlePaint.color = resources.getColor(R.color.green_4CAF50)
+        circlePaint.color = resources.getColor(R.color.gray_999999)
         circlePaint.style = Paint.Style.FILL
         circlePaint.isAntiAlias = true
 
