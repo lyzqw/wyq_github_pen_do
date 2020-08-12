@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
 
 /**
  * 编辑便签
@@ -45,8 +47,12 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
         _hasEditNote.postValue(hasEditNote)
     }
 
-    fun saveNoteWhenFinish(noteId: String) {
-        if (hasEditNote.value == true && hasEditContent()) {
+    fun saveNoteWhenFinish(
+        noteId: String,
+        continuation: Continuation<Boolean>?
+    ) {
+        val hasEdit = hasEditNote.value == true && hasEditContent()
+        if (hasEdit) {
             viewModelScope.launch(Dispatchers.IO) {
                 val start = LogTime.getLogTime()
                 val noteEntity = NoteEntity(
@@ -61,6 +67,7 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
             }
         }
         Timber.d("===saveNoteWhenFinish:  finish")
+        continuation?.resume(hasEdit)
     }
 
     private fun hasEditContent(): Boolean =

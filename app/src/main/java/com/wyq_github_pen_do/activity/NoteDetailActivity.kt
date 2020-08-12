@@ -6,6 +6,7 @@ import com.wyq.common.base.BaseActivity
 import com.wyq.common.ext.value
 import com.wyq.common.model.NoteConfig
 import com.wyq_github_pen_do.R
+import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
 import com.wyq_github_pen_do.databinding.ActivityNoteBinding
 import com.wyq_github_pen_do.fragment.NoteDetailFragment
 import com.wyq_github_pen_do.viewmodel.NoteViewModel
@@ -40,7 +41,8 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
     override fun initView() {
         noteId = intent?.getStringExtra(KEY_NOTE_ID).value()
         supportFragmentManager.beginTransaction()
-            .add(R.id.note_container, NoteDetailFragment(), "note_fragment").commitAllowingStateLoss()
+            .add(R.id.note_container, NoteDetailFragment(), "note_fragment")
+            .commitAllowingStateLoss()
     }
 
     override fun loadData() {
@@ -49,7 +51,7 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
 
     override fun finish() {
         super.finish()
-        mViewModel.saveNoteWhenFinish(noteId)
+        mViewModel.saveNoteWhenFinish(noteId, NoteDetailScopedService.getContinuation())
     }
 
     override fun initListener() {

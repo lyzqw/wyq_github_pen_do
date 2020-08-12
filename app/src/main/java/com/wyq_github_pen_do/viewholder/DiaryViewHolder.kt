@@ -8,8 +8,8 @@ import com.wyq.common.ext.value
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.databinding.ItemNoteNormalBinding
 
-class DiaryViewHolder(private val binding: ItemNoteNormalBinding) :
-    BaseViewHolder(binding.root) {
+class DiaryViewHolder(private val binding: ItemNoteNormalBinding) : BaseViewHolder(binding.root) {
+
 
     fun bindData(noteListBean: NoteListBean) {
         binding.apply {

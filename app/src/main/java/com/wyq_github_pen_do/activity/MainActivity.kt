@@ -15,6 +15,7 @@ import com.wyq.common.model.DefaultNoteConfig
 import com.wyq.common.model.Note
 import com.wyq.common.model.NoteFactory
 import com.wyq_github_pen_do.R
+import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
 import com.wyq_github_pen_do.databinding.ActivityMainBinding
 import com.wyq_github_pen_do.fragment.DiaryFragment
 import com.wyq_github_pen_do.fragment.NoteFragment
@@ -87,12 +88,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         new_note.setOnClickListener {
-            val factory: Note.Factory =
-                NoteFactory(UUID.randomUUID().toString(), DefaultNoteConfig.EditMode.EDIT_AUTO_CAN)
-            NoteDetailActivity.start(factory.build())
+            lifecycleScope.launch {
+                val factory: Note.Factory =
+                    NoteFactory(
+                        UUID.randomUUID().toString(),
+                        DefaultNoteConfig.EditMode.EDIT_AUTO_CAN
+                    )
+                val result = NoteDetailScopedService.startWithCoroutine(factory.build())
+
+
+                Log.d("note_detail", "result: "+result)
+            }
         }
 
         image_main_search.clickJitter {
+            val factory: Note.Factory =
+                NoteFactory(
+                    UUID.randomUUID().toString(),
+                    DefaultNoteConfig.EditMode.EDIT_AUTO_CAN
+                )
+            NoteDetailActivity.start(factory.build())
             lifecycleScope.launch(Dispatchers.IO) {
                 mNoteData.updateNote(0, "修改后的....")
                 Log.d("wqq", "initView: ")

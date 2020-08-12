@@ -8,7 +8,7 @@ interface NoteDao {
     @Insert(entity = NoteEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun insert(noteEntity: NoteEntity)
 
-    @Query("SELECT * FROM note_table")
+    @Query("SELECT * FROM note_table ORDER BY create_date DESC")
     fun findAll(): List<NoteEntity>
 
     @Delete
