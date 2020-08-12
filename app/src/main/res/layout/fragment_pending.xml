@@ -5,7 +5,7 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -14,7 +14,9 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textColor="@color/black_333333"
-            android:text="note "/>
+            android:text="@string/tv_pending"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </FrameLayout>
 </layout>

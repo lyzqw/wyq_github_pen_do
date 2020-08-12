@@ -33,9 +33,7 @@ class DivisionView : View {
 
 
     init {
-        linePaint.style = Paint.Style.STROKE
-        linePaint.color = resources.getColor(R.color.white_255_alpha_30)
-        linePaint.strokeWidth = SizeUtils.dp2px(1f).toFloat()
+        linePaint.color = resources.getColor(R.color.gray_999999)
         linePaint.isAntiAlias = true
         linePaint.pathEffect = DashPathEffect(floatArrayOf(8f, 10f, 8f, 10f), 0f)
     }
@@ -49,7 +47,8 @@ class DivisionView : View {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        Log.d(TAG, "onDraw: " + width)
+        Log.d(TAG, "onDraw.w: " + mViewWidth)
+        Log.d(TAG, "onDraw.h: " + mViewHeight)
         canvas.drawLine(
             (mViewWidth / 2).toFloat(),
             0f,

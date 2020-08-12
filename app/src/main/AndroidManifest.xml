@@ -31,7 +31,7 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".activity.NoteActivity"
+            android:name=".activity.NoteDetailActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
     </application>

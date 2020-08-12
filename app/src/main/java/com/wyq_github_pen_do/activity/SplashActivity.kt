@@ -24,4 +24,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun loadData() {
     }
+
+    override fun initListener() {
+    }
 }

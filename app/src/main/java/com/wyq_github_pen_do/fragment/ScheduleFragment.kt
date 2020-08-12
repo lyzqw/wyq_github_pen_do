@@ -11,11 +11,11 @@ import com.wyq_github_pen_do.databinding.FragmentNoteDetailBinding
 import org.koin.android.ext.android.inject
 
 
-class NoteFragment : BaseFragment<FragmentNoteDetailBinding>() {
+class ScheduleFragment : BaseFragment<FragmentNoteDetailBinding>() {
 
 
     companion object {
-        fun newInstance() = NoteFragment()
+        fun newInstance() = ScheduleFragment()
     }
 
     override fun layoutId(): Int = R.layout.fragment_note

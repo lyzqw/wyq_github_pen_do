@@ -23,7 +23,9 @@ abstract class BaseActivity<ViewDB : ViewDataBinding> : AppCompatActivity() {
 
         initView()
         loadData()
+        initListener()
     }
+
 
     abstract val layoutId: Int
 
@@ -31,4 +33,5 @@ abstract class BaseActivity<ViewDB : ViewDataBinding> : AppCompatActivity() {
 
     abstract fun loadData()
 
+    abstract fun initListener()
 }

@@ -13,6 +13,7 @@
         android:fitsSystemWindows="true">
 
         <ImageView
+            android:id="@+id/image_main_search"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="16dp"
@@ -60,7 +61,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="6dp"
             app:layout_constraintBottom_toTopOf="@+id/layout_bottom_button"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -69,7 +70,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="6dp"
             app:layout_constraintBottom_toTopOf="@+id/layout_bottom_button"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -77,13 +78,15 @@
         <FrameLayout
             android:id="@+id/layout_bottom_button"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.wyq.common.widget.MainBottomButtonLayout
+                android:id="@+id/main_bottom_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom" />
 
         </FrameLayout>
 

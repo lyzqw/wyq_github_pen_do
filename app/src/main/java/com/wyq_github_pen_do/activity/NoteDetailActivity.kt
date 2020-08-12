@@ -7,14 +7,14 @@ import com.wyq.common.ext.value
 import com.wyq.common.model.NoteConfig
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.databinding.ActivityNoteBinding
-import com.wyq_github_pen_do.fragment.NoteFragment
+import com.wyq_github_pen_do.fragment.NoteDetailFragment
 import com.wyq_github_pen_do.viewmodel.NoteViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 编辑标签页
  */
-class NoteActivity : BaseActivity<ActivityNoteBinding>() {
+class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
 
     private var noteId: String = ""
     private val mViewModel by viewModel<NoteViewModel>()
@@ -29,7 +29,7 @@ class NoteActivity : BaseActivity<ActivityNoteBinding>() {
                 it.putBoolean(AUTO_EDIT_NOTE, config.autoEditNote())
             }
             ActivityUtils.startActivity(
-                NoteActivity::class.java,
+                NoteDetailActivity::class.java,
                 bundle
             )
         }
@@ -40,7 +40,7 @@ class NoteActivity : BaseActivity<ActivityNoteBinding>() {
     override fun initView() {
         noteId = intent?.getStringExtra(KEY_NOTE_ID).value()
         supportFragmentManager.beginTransaction()
-            .add(R.id.note_container, NoteFragment(), "note_fragment").commitAllowingStateLoss()
+            .add(R.id.note_container, NoteDetailFragment(), "note_fragment").commitAllowingStateLoss()
     }
 
     override fun loadData() {
@@ -50,6 +50,9 @@ class NoteActivity : BaseActivity<ActivityNoteBinding>() {
     override fun finish() {
         super.finish()
         mViewModel.saveNoteWhenFinish(noteId)
+    }
+
+    override fun initListener() {
     }
 
 }

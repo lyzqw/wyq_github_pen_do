@@ -11,14 +11,14 @@ import com.wyq_github_pen_do.databinding.FragmentNoteDetailBinding
 import org.koin.android.ext.android.inject
 
 
-class NoteFragment : BaseFragment<FragmentNoteDetailBinding>() {
+class PendingFragment : BaseFragment<FragmentNoteDetailBinding>() {
 
 
     companion object {
-        fun newInstance() = NoteFragment()
+        fun newInstance() = PendingFragment()
     }
 
-    override fun layoutId(): Int = R.layout.fragment_note
+    override fun layoutId(): Int = R.layout.fragment_pending
 
     override fun initView() {
 

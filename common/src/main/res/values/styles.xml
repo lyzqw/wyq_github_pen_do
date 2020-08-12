@@ -2,6 +2,8 @@
 
 
     <style name="LayoutMainBottomButton" parent="TextSize_10_white">
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_width">0dp</item>
     </style>
 
     <style name="TextSize_11_white">
