@@ -20,10 +20,12 @@ import com.wyq_github_pen_do.fragment.DiaryFragment
 import com.wyq_github_pen_do.fragment.NoteFragment
 import com.wyq_github_pen_do.fragment.PendingFragment
 import com.wyq_github_pen_do.fragment.ScheduleFragment
+import com.wyq_github_pen_do.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.include_main_layer.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 /**
@@ -33,13 +35,16 @@ import java.util.*
  */
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private val mNoteData: NoteDao by inject<NoteDao>()
-
     private lateinit var fragments: List<Fragment>
+
+    private val mNoteData by inject<NoteDao>()
+    private val mMainViewModel by viewModel<MainViewModel>()
+
 
     override val layoutId: Int = R.layout.activity_main
 
     override fun initView() {
+        binding.layoutMainLayer.viewModel = mMainViewModel
         loadFragments()
     }
 
@@ -55,8 +60,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             supportFragmentManager,
             fragments,
             R.id.main_container,
-            0
+            MainTabEnum.TAB_DIARY.index
         )
+        mMainViewModel.updateMainTabEnum(MainTabEnum.TAB_DIARY)
     }
 
     override fun loadData() {
@@ -66,17 +72,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initListener() {
         binding.run {
             layoutMainLayer.mainBottomLayout.setOnDiaryClickListener { isSelected ->
-                FragmentUtils.showHide(MainTabEnum.TAB_DIARY.index, fragments)
+                updateSelectedMainTab(MainTabEnum.TAB_DIARY, isSelected)
             }
 
             layoutMainLayer.mainBottomLayout.setOnNoteClickListener { isSelected ->
-                FragmentUtils.showHide(MainTabEnum.TAB_NOTE.index, fragments)
+                updateSelectedMainTab(MainTabEnum.TAB_NOTE, isSelected)
             }
             layoutMainLayer.mainBottomLayout.setOnPendingClickListener { isSelected ->
-                FragmentUtils.showHide(MainTabEnum.TAB_PENDING.index, fragments)
+                updateSelectedMainTab(MainTabEnum.TAB_PENDING, isSelected)
             }
             layoutMainLayer.mainBottomLayout.setOnScheduleClickListener { isSelected ->
-                FragmentUtils.showHide(MainTabEnum.TAB_SCHEDULE.index, fragments)
+                updateSelectedMainTab(MainTabEnum.TAB_SCHEDULE, isSelected)
             }
         }
 
@@ -92,6 +98,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 Log.d("wqq", "initView: ")
             }
         }
+    }
+
+    private fun updateSelectedMainTab(
+        mainTabEnum: MainTabEnum,
+        isSelected: Boolean
+    ) {
+        FragmentUtils.showHide(mainTabEnum.index, fragments)
+        mMainViewModel.updateMainTabEnum(mainTabEnum)
+        mMainViewModel.updateAddNoteColor(if (isSelected) mainTabEnum.selectedColor else mainTabEnum.normalColor)
     }
 
     private fun setTitleToday() {

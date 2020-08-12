@@ -99,7 +99,7 @@ class MainBottomButtonLayout : FrameLayout {
         } else {
             resetButtonStatus()
             params.height = SizeUtils.dp2px(23f)
-            getSelectedStatusDrawable(8f, tabEnum.color)
+            getSelectedStatusDrawable(8f, tabEnum.selectedColor)
         }
         targetView.layoutParams = params
         targetView.background = drawable

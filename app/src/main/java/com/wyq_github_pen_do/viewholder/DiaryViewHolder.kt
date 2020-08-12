@@ -13,13 +13,16 @@ class DiaryViewHolder(private val binding: ItemNoteNormalBinding) :
 
     fun bindData(noteListBean: NoteListBean) {
         binding.apply {
-            layoutNoteContent.tvNoteContent.text = noteListBean.content.value()
+            layoutNoteContent.tvNoteContent.text =
+                if (noteListBean.content.isNullOrEmpty()) noteListBean.title.value() else noteListBean.content.value()
 
             val noteCreateDateMs = noteListBean.create_date?.toLongOrNull().value()
             if (noteCreateDateMs <= 0) return
-            val time = TimeUtils.millis2String(noteCreateDateMs,TimeUtils.getSafeDateFormat("HH:mm"))
-            val date = TimeUtils.millis2String(noteCreateDateMs,TimeUtils.getSafeDateFormat("MM/dd"))
-            val noteDate = time+"\n"+ date+ TimeUtils.getChineseWeek(noteCreateDateMs)
+            val time =
+                TimeUtils.millis2String(noteCreateDateMs, TimeUtils.getSafeDateFormat("HH:mm"))
+            val date =
+                TimeUtils.millis2String(noteCreateDateMs, TimeUtils.getSafeDateFormat("MM/dd"))
+            val noteDate = time + "\n" + date + TimeUtils.getChineseWeek(noteCreateDateMs)
             layoutNoteDate.tvNoteDate.text = noteDate
         }
     }
