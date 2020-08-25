@@ -14,6 +14,7 @@ android {
         targetSdkVersion(28)
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -67,7 +68,7 @@ dependencies {
 
     //glide
     api("com.github.bumptech.glide:glide:4.11.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
     api("com.github.bumptech.glide:okhttp3-integration:4.9.0")
 
 

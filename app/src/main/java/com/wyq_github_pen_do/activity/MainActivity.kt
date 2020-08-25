@@ -7,13 +7,13 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.wyq.common.base.BaseActivity
-import com.wyq.common.database.NoteDao
 import com.wyq.common.enum.MainTabEnum
 import com.wyq.common.ext.clickJitter
 import com.wyq.common.ext.getShapeDrawable
 import com.wyq.common.model.DefaultNoteConfig
 import com.wyq.common.model.Note
 import com.wyq.common.model.NoteFactory
+import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
 import com.wyq_github_pen_do.databinding.ActivityMainBinding
@@ -23,9 +23,7 @@ import com.wyq_github_pen_do.fragment.PendingFragment
 import com.wyq_github_pen_do.fragment.ScheduleFragment
 import com.wyq_github_pen_do.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.include_main_layer.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -38,9 +36,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private lateinit var fragments: List<Fragment>
 
-    private val mNoteData by inject<NoteDao>()
     private val mMainViewModel by viewModel<MainViewModel>()
-
 
     override val layoutId: Int = R.layout.activity_main
 
@@ -95,24 +91,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         DefaultNoteConfig.EditMode.EDIT_AUTO_CAN
                     )
                 val result = NoteDetailScopedService.startWithCoroutine(factory.build())
-
-
-                Log.d("note_detail", "result: "+result)
+                if (result) {
+                    val note = mMainViewModel.getLatestNote()?.also { NoteListBean.createNoteListBean(it) }
+                    //fragments[mMainViewModel.mainTabIndex.value.value()].insertLatestNote(note) 接口调用
+                }
+                Log.d("note_detail", "result: " + result)
             }
         }
 
-        image_main_search.clickJitter {
-            val factory: Note.Factory =
-                NoteFactory(
-                    UUID.randomUUID().toString(),
-                    DefaultNoteConfig.EditMode.EDIT_AUTO_CAN
-                )
-            NoteDetailActivity.start(factory.build())
-            lifecycleScope.launch(Dispatchers.IO) {
-                mNoteData.updateNote(0, "修改后的....")
-                Log.d("wqq", "initView: ")
-            }
-        }
+        image_main_search.clickJitter {}
     }
 
     private fun updateSelectedMainTab(

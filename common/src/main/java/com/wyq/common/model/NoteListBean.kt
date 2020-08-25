@@ -1,5 +1,8 @@
 package com.wyq.common.model
 
+import com.wyq.common.database.NoteEntity
+import com.wyq.common.enum.NoteTypeEnum
+
 data class NoteListBean(
 
     /**
@@ -43,4 +46,22 @@ data class NoteListBean(
      */
     var note_image: String? = ""
 
-) : BaseNoteListBean()
+) : BaseNoteListBean() {
+
+    companion object {
+        fun createNoteListBean(entity: NoteEntity) =
+            NoteListBean(
+                NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
+                entity.noteId,
+                entity.title,
+                entity.content,
+                entity.create_date,
+                entity.tag_color,
+                entity.tag_content,
+                entity.note_image
+            )
+
+    }
+
+
+}

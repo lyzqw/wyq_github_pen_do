@@ -3,13 +3,18 @@ package com.wyq_github_pen_do.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wyq.common.base.BaseViewModel
+import com.wyq.common.database.NoteDao
 import com.wyq.common.enum.MainTabEnum
 import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 /**
  * 主页
  */
 class MainViewModel : BaseViewModel(), KoinComponent {
+
+    private val mNoteData by inject<NoteDao>()
+
 
     private var _mainTabIndexLiveData = MutableLiveData<Int>()
     val mainTabIndex: LiveData<Int> = _mainTabIndexLiveData
@@ -32,5 +37,6 @@ class MainViewModel : BaseViewModel(), KoinComponent {
         _addNoteColorLiveData.value = color
     }
 
+    fun getLatestNote() = mNoteData.findLatestNote()
 
 }

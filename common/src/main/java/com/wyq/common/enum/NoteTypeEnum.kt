@@ -9,8 +9,8 @@ enum class NoteTypeEnum(val code: Int) {
     /**
      * 日记
      */
-    TYPE_DIARY_STYLE_1(1),
-    TYPE_DIARY_STYLE_2(2),
+    TYPE_DIARY_STYLE_1(1), //左方向
+    TYPE_DIARY_STYLE_2(2), //右方向
 
     /**
      * 笔记

@@ -20,4 +20,7 @@ interface NoteDao {
     @Query("UPDATE note_table SET content = :content WHERE id= :noteId")
     fun updateNote(noteId: Int, content: String?)
 
+    @Query("SELECT * FROM note_table ORDER BY create_date DESC limit 1")
+    fun findLatestNote(): NoteEntity?
+
 }
