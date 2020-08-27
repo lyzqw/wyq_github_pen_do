@@ -14,6 +14,7 @@ import com.wyq.common.database.NoteEntity
 import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.R
+import com.wyq_github_pen_do.Listener.INoteFragment
 import com.wyq_github_pen_do.adapter.NoteListAdapter
 import com.wyq_github_pen_do.databinding.FragmentDiaryBinding
 import kotlinx.android.synthetic.main.fragment_diary.*
@@ -22,9 +23,9 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
-class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
+class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
 
-    companion object{
+    companion object {
         fun newInstance() = DiaryFragment()
     }
 
@@ -45,7 +46,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
             }
 
             override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-                Log.d("main_recyc", "onDraw: "+parent.measuredHeight)
+                Log.d("main_recyc", "onDraw: " + parent.measuredHeight)
             }
         })
         recycler_main.layoutManager = LinearLayoutManager(context)
@@ -75,6 +76,12 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
         )
 
     override fun initListener() {
+
+    }
+
+    override fun insertLatestNote(note: NoteListBean) {
+        Log.d("wqq", "insertLatestNote: 添加一个新数据")
+        noteListAdapter.setData(0, note)
     }
 
 

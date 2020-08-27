@@ -1,6 +1,5 @@
 package com.wyq_github_pen_do.activity
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ColorUtils
@@ -10,11 +9,13 @@ import com.wyq.common.base.BaseActivity
 import com.wyq.common.enum.MainTabEnum
 import com.wyq.common.ext.clickJitter
 import com.wyq.common.ext.getShapeDrawable
+import com.wyq.common.ext.value
 import com.wyq.common.model.DefaultNoteConfig
 import com.wyq.common.model.Note
 import com.wyq.common.model.NoteFactory
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.R
+import com.wyq_github_pen_do.Listener.INoteFragment
 import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
 import com.wyq_github_pen_do.databinding.ActivityMainBinding
 import com.wyq_github_pen_do.fragment.DiaryFragment
@@ -23,7 +24,9 @@ import com.wyq_github_pen_do.fragment.PendingFragment
 import com.wyq_github_pen_do.fragment.ScheduleFragment
 import com.wyq_github_pen_do.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.include_main_layer.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -92,14 +95,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     )
                 val result = NoteDetailScopedService.startWithCoroutine(factory.build())
                 if (result) {
-                    val note = mMainViewModel.getLatestNote()?.also { NoteListBean.createNoteListBean(it) }
-                    //fragments[mMainViewModel.mainTabIndex.value.value()].insertLatestNote(note) 接口调用
+                    lifecycleScope.launch {
+                        insertLatestNote()
+                    }
                 }
-                Log.d("note_detail", "result: " + result)
             }
         }
 
         image_main_search.clickJitter {}
+    }
+
+    private suspend fun insertLatestNote() {
+        val note = withContext(Dispatchers.IO){
+            mMainViewModel.getLatestNote()?.let { NoteListBean.createNoteListBean(it) }
+        }
+        if (note != null) {
+            val iNoteFragment = fragments[mMainViewModel.mainTabIndex.value.value()] as INoteFragment
+            iNoteFragment.insertLatestNote(note)
+        }
     }
 
     private fun updateSelectedMainTab(

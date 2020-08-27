@@ -1,17 +1,14 @@
 package com.wyq_github_pen_do.fragment
 
 import com.wyq.common.base.BaseFragment
-import com.wyq.common.database.NoteDao
-import com.wyq.common.database.NoteEntity
-import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.R
-import com.wyq_github_pen_do.adapter.NoteListAdapter
+import com.wyq_github_pen_do.Listener.INoteFragment
+
 import com.wyq_github_pen_do.databinding.FragmentNoteDetailBinding
-import org.koin.android.ext.android.inject
 
 
-class NoteFragment : BaseFragment<FragmentNoteDetailBinding>() {
+class NoteFragment : BaseFragment<FragmentNoteDetailBinding>(), INoteFragment {
 
 
     companion object {
@@ -30,6 +27,10 @@ class NoteFragment : BaseFragment<FragmentNoteDetailBinding>() {
     }
 
     override fun initListener() {
+    }
+
+    override fun insertLatestNote(note: NoteListBean) {
+
     }
 
 

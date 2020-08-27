@@ -1,5 +1,6 @@
 package com.wyq_github_pen_do.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,6 +12,7 @@ import com.wyq_github_pen_do.viewholder.DiaryViewHolder
 
 class NoteListAdapter : ListAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCallback()) {
 
+    private var dataList: MutableList<NoteListBean> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
@@ -35,12 +37,18 @@ class NoteListAdapter : ListAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCa
         return currentList[position].type
     }
 
-    fun setNewData(dataList: List<NoteListBean>) {
+    fun setNewData(dataList: MutableList<NoteListBean>) {
+        this.dataList = dataList
         submitList(dataList)
     }
 
     fun addData(dataList: ArrayList<NoteListBean>) {
         submitList(dataList)
+    }
+
+    fun setData(position: Int, note: NoteListBean) {
+        dataList.add(position,note)
+        setNewData(dataList)
     }
 
     class NoteListDiffCallback : DiffUtil.ItemCallback<NoteListBean>() {

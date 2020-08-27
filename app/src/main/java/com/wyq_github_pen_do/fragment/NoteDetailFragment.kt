@@ -4,9 +4,8 @@ import android.text.Editable
 import com.wyq.common.base.BaseFragment
 import com.wyq.common.ext.value
 import com.wyq_github_pen_do.R
-import com.wyq_github_pen_do.`interface`.SimpleTextWatcherListener
+import com.wyq_github_pen_do.Listener.SimpleTextWatcherListener
 import com.wyq_github_pen_do.activity.NoteDetailActivity.Companion.AUTO_EDIT_NOTE
-import com.wyq_github_pen_do.databinding.FragmentNoteBinding
 import com.wyq_github_pen_do.databinding.FragmentNoteDetailBinding
 import com.wyq_github_pen_do.viewmodel.NoteViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
