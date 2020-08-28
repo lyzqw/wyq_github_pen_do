@@ -10,26 +10,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
 import com.wyq.common.base.BaseFragment
 import com.wyq.common.database.NoteDao
-import com.wyq.common.database.NoteEntity
-import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.Listener.INoteFragment
 import com.wyq_github_pen_do.adapter.NoteListAdapter
 import com.wyq_github_pen_do.databinding.FragmentDiaryBinding
+import com.wyq_github_pen_do.viewmodel.NoteListViewModel
 import kotlinx.android.synthetic.main.fragment_diary.*
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
 
     companion object {
+        const val TAG = "DiaryFragment"
         fun newInstance() = DiaryFragment()
     }
 
-    private val mNoteDao by inject<NoteDao>()
+    private val mViewModel by viewModel<NoteListViewModel>()
     private lateinit var noteListAdapter: NoteListAdapter
 
     override fun layoutId(): Int = R.layout.fragment_diary
@@ -44,10 +46,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
             ) {
                 outRect.top = SizeUtils.dp2px(20f)
             }
-
-            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-                Log.d("main_recyc", "onDraw: " + parent.measuredHeight)
-            }
         })
         recycler_main.layoutManager = LinearLayoutManager(context)
         noteListAdapter = NoteListAdapter()
@@ -56,32 +54,23 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
 
 
     override fun initData() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val dataList = mNoteDao.findAll()
-            Log.d("mainFragment", "initData: " + dataList)
-            noteListAdapter.setNewData(dataList.map { createNoteListBean(it) }.toMutableList())
+        lifecycleScope.launch {
+            mViewModel.noteList.collectLatest {
+                Log.d("wqq", "observe: ${it}")
+                noteListAdapter.submitData(lifecycle, it)
+            }
+        }
+
+        noteListAdapter.addLoadStateListener {
+            Timber.tag(TAG).d("addLoadStateListener: ")
         }
     }
 
-    private fun createNoteListBean(entity: NoteEntity) =
-        NoteListBean(
-            NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
-            entity.noteId,
-            entity.title,
-            entity.content,
-            entity.create_date,
-            entity.tag_color,
-            entity.tag_content,
-            entity.note_image
-        )
-
     override fun initListener() {
-
     }
 
     override fun insertLatestNote(note: NoteListBean) {
         Log.d("wqq", "insertLatestNote: 添加一个新数据")
-        noteListAdapter.setData(0, note)
     }
 
 

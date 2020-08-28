@@ -1,18 +1,15 @@
 package com.wyq_github_pen_do.adapter
 
-import android.util.Log
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.wyq.common.base.BaseViewHolder
 import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.ext.throwExceptionWhenDebug
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.viewholder.DiaryViewHolder
 
-class NoteListAdapter : ListAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCallback()) {
-
-    private var dataList: MutableList<NoteListBean> = mutableListOf()
+class NoteListAdapter : PagingDataAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
@@ -24,9 +21,11 @@ class NoteListAdapter : ListAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCa
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        val item = getItem(position)
+        item ?:return
         when (holder) {
             is DiaryViewHolder -> {
-                holder.bindData(currentList[position])
+                holder.bindData(item)
             }
             else -> throwExceptionWhenDebug("This is error holder!")
         }
@@ -34,21 +33,7 @@ class NoteListAdapter : ListAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCa
 
 
     override fun getItemViewType(position: Int): Int {
-        return currentList[position].type
-    }
-
-    fun setNewData(dataList: MutableList<NoteListBean>) {
-        this.dataList = dataList
-        submitList(dataList)
-    }
-
-    fun addData(dataList: ArrayList<NoteListBean>) {
-        submitList(dataList)
-    }
-
-    fun setData(position: Int, note: NoteListBean) {
-        dataList.add(position,note)
-        setNewData(dataList)
+        return getItem(position)?.type ?: 0
     }
 
     class NoteListDiffCallback : DiffUtil.ItemCallback<NoteListBean>() {

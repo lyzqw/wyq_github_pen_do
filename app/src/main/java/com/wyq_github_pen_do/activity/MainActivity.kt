@@ -1,12 +1,16 @@
 package com.wyq_github_pen_do.activity
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.wyq.common.base.BaseActivity
+import com.wyq.common.database.NoteDao
+import com.wyq.common.database.NoteEntity
 import com.wyq.common.enum.MainTabEnum
+import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.ext.clickJitter
 import com.wyq.common.ext.getShapeDrawable
 import com.wyq.common.ext.value
@@ -14,8 +18,8 @@ import com.wyq.common.model.DefaultNoteConfig
 import com.wyq.common.model.Note
 import com.wyq.common.model.NoteFactory
 import com.wyq.common.model.NoteListBean
-import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.Listener.INoteFragment
+import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
 import com.wyq_github_pen_do.databinding.ActivityMainBinding
 import com.wyq_github_pen_do.fragment.DiaryFragment
@@ -27,6 +31,7 @@ import kotlinx.android.synthetic.main.include_main_layer.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -40,6 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var fragments: List<Fragment>
 
     private val mMainViewModel by viewModel<MainViewModel>()
+    private val mNoteData by inject<NoteDao>()
 
     override val layoutId: Int = R.layout.activity_main
 
@@ -102,7 +108,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
-        image_main_search.clickJitter {}
+        image_main_search.clickJitter {
+            val noteEntity = NoteEntity(
+                type = NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
+                noteId = UUID.randomUUID().toString(),
+                title =  Random().nextInt(12312).toString(),
+                create_date = System.currentTimeMillis().toString(),
+                content = ""
+            )
+            lifecycleScope.launch { withContext(Dispatchers.IO){mNoteData.insert(noteEntity)} }
+            Log.d("wqq", "initListener: 添加一个")
+        }
     }
 
     private suspend fun insertLatestNote() {

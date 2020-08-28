@@ -50,10 +50,11 @@ dependencies {
     api("com.tencent.bugly:crashreport:3.2.1")
     api("com.tencent.bugly:nativecrashreport:3.7.1")
     api("androidx.recyclerview:recyclerview:1.1.0")
+    api("androidx.paging:paging-runtime:3.0.0-alpha05")
 
     //room
-    api("androidx.room:room-runtime:2.2.5")
-    kapt("androidx.room:room-compiler:2.2.5")
+    api("androidx.room:room-runtime:2.3.0-alpha02")
+    kapt("androidx.room:room-compiler:2.3.0-alpha02")
     //koin
     api("org.koin:koin-android:2.1.6")
     api("org.koin:koin-androidx-scope:2.1.6")

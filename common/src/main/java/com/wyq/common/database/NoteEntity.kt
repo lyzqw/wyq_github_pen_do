@@ -16,7 +16,7 @@ data class NoteEntity(
     /**
      * 笔记的类型 {@link com.wyq.common.enum.NoteTypeEnum}
      */
-    var type: Int,
+    var type: Int?=null,
     /**
      * 笔记唯一标识
      */
