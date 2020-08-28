@@ -32,5 +32,9 @@ class PendingFragment : BaseFragment<FragmentNoteDetailBinding>() , INoteFragmen
 
     }
 
+    override fun OnItemClickListener(note: NoteListBean) {
+
+    }
+
 
 }

@@ -5,11 +5,15 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.wyq.common.base.BaseViewHolder
 import com.wyq.common.enum.NoteTypeEnum
+import com.wyq.common.ext.clickJitter
 import com.wyq.common.ext.throwExceptionWhenDebug
 import com.wyq.common.model.NoteListBean
+import com.wyq_github_pen_do.Listener.INoteFragment
+import com.wyq_github_pen_do.fragment.DiaryFragment
 import com.wyq_github_pen_do.viewholder.DiaryViewHolder
 
-class NoteListAdapter : PagingDataAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCallback()) {
+class NoteListAdapter(private val iNoteFragment: INoteFragment) :
+    PagingDataAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
@@ -25,10 +29,11 @@ class NoteListAdapter : PagingDataAdapter<NoteListBean, BaseViewHolder>(NoteList
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = getItem(position)
-        item ?:return
+        item ?: return
         when (holder) {
             is DiaryViewHolder -> {
                 holder.bindData(item)
+                holder.itemView.clickJitter { iNoteFragment.OnItemClickListener(item) }
             }
             else -> throwExceptionWhenDebug("This is error holder!")
         }

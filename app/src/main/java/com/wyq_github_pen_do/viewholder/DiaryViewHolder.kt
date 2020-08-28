@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.TimeUtils
 import com.wyq.common.base.BaseViewHolder
+import com.wyq.common.ext.clickJitter
 import com.wyq.common.ext.value
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.databinding.ItemNoteNormalStyle1Binding
@@ -27,7 +28,6 @@ class DiaryViewHolder(private val rootView: View) : BaseViewHolder(rootView) {
             TimeUtils.millis2String(noteCreateDateMs, TimeUtils.getSafeDateFormat("MM/dd"))
         val noteDate = time + "\n" + date + TimeUtils.getChineseWeek(noteCreateDateMs)
         rootView.tv_note_date.text = noteDate
-
     }
 
     companion object {

@@ -4,4 +4,5 @@ interface NoteConfig {
     fun noteId(): String
     fun autoEditNote(): Boolean
     fun mainIndex(): Int
+    fun getPreviewNote(): NoteListBean?
 }

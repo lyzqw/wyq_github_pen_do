@@ -10,12 +10,14 @@ data class DefaultNoteConfig(
 ) : NoteConfig {
 
 
-    override fun noteId(): String  = noteId
+    override fun noteId(): String = noteId
 
 
     override fun autoEditNote() = editMode == EditMode.EDIT_AUTO_CAN
 
     override fun mainIndex() = mainIndex
+
+    override fun getPreviewNote(): NoteListBean? = null
 
 
     enum class EditMode(val code: Int) {

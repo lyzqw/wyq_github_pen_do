@@ -14,10 +14,7 @@ import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.ext.clickJitter
 import com.wyq.common.ext.getShapeDrawable
 import com.wyq.common.ext.value
-import com.wyq.common.model.DefaultNoteConfig
-import com.wyq.common.model.Note
-import com.wyq.common.model.NoteFactory
-import com.wyq.common.model.NoteListBean
+import com.wyq.common.model.*
 import com.wyq_github_pen_do.Listener.INoteFragment
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
@@ -95,7 +92,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         new_note.setOnClickListener {
             lifecycleScope.launch {
                 val factory: Note.Factory =
-                    NoteFactory(
+                    NoteNormalFactory(
                         UUID.randomUUID().toString(),
                         DefaultNoteConfig.EditMode.EDIT_AUTO_CAN,
                         mMainViewModel.getMainTabIndex()

@@ -1,10 +1,14 @@
 package com.wyq_github_pen_do.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.Utils
 import com.wyq.common.base.BaseActivity
 import com.wyq.common.ext.value
 import com.wyq.common.model.NoteConfig
+import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
 import com.wyq_github_pen_do.databinding.ActivityNoteBinding
@@ -25,17 +29,21 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
         const val KEY_NOTE_ID = "key_note_id"
         const val KEY_AUTO_EDIT_NOTE = "auto_edit_note"
         const val KEY_MAIN_INDEX = "key_main_index"
+        const val KEY_NOTE_BEAN = "key_note_bean"
 
         fun start(config: NoteConfig) {
+            Log.d("wqq", "start: "+config.getPreviewNote())
             val bundle = Bundle().also {
                 it.putString(KEY_NOTE_ID, config.noteId())
                 it.putBoolean(KEY_AUTO_EDIT_NOTE, config.autoEditNote())
                 it.putInt(KEY_MAIN_INDEX, config.mainIndex())
+                it.putSerializable(KEY_NOTE_BEAN, config.getPreviewNote())
             }
-            ActivityUtils.startActivity(
-                NoteDetailActivity::class.java,
-                bundle
-            )
+            val context = Utils.getApp().applicationContext
+            val intent = Intent(context, NoteDetailActivity::class.java)
+            intent.putExtras(bundle)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
         }
     }
 
@@ -44,6 +52,9 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
     override fun initView() {
         noteId = intent?.getStringExtra(KEY_NOTE_ID).value()
         mainIndex = intent?.getIntExtra(KEY_MAIN_INDEX, 0).value()
+        val bean = intent!!.getSerializableExtra(KEY_NOTE_BEAN)
+        Log.d("wqq", "initView.noteid: "+noteId)
+        Log.d("wqq", "initView.bean: "+bean)
         supportFragmentManager.beginTransaction()
             .add(R.id.note_container, NoteDetailFragment(), "note_fragment")
             .commitAllowingStateLoss()

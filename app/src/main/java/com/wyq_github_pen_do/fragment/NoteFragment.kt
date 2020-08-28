@@ -33,5 +33,9 @@ class NoteFragment : BaseFragment<FragmentNoteDetailBinding>(), INoteFragment {
 
     }
 
+    override fun OnItemClickListener(note: NoteListBean) {
+
+    }
+
 
 }

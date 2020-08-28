@@ -3,8 +3,10 @@ package com.wyq_github_pen_do.fragment
 import android.text.Editable
 import com.wyq.common.base.BaseFragment
 import com.wyq.common.ext.value
+import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.Listener.SimpleTextWatcherListener
+import com.wyq_github_pen_do.activity.NoteDetailActivity
 import com.wyq_github_pen_do.activity.NoteDetailActivity.Companion.KEY_AUTO_EDIT_NOTE
 import com.wyq_github_pen_do.databinding.FragmentNoteDetailBinding
 import com.wyq_github_pen_do.viewmodel.NoteViewModel
@@ -26,7 +28,19 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding>() {
     }
 
     override fun initData() {
-        mViewModel.setHasEditNote(activity?.intent?.getBooleanExtra(KEY_AUTO_EDIT_NOTE, true).value())
+        mViewModel.setHasEditNote(
+            activity?.intent?.getBooleanExtra(KEY_AUTO_EDIT_NOTE, true).value()
+        )
+
+        setPreviewNoteData()
+    }
+
+    private fun setPreviewNoteData() {
+        val noteListBean =
+            activity?.intent?.getSerializableExtra(NoteDetailActivity.KEY_NOTE_BEAN) as? NoteListBean
+        noteListBean ?: return
+        mViewModel.noteTitle.value = noteListBean.title.value()
+        mViewModel.noteContent.value = noteListBean.content.value()
     }
 
     override fun initListener() {

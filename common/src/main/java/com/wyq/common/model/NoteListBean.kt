@@ -1,7 +1,10 @@
 package com.wyq.common.model
 
+import android.os.Parcelable
 import com.wyq.common.database.NoteEntity
 import com.wyq.common.enum.NoteTypeEnum
+import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 data class NoteListBean(
 
@@ -46,7 +49,7 @@ data class NoteListBean(
      */
     var note_image: String? = ""
 
-) : BaseNoteListBean() {
+) : BaseNoteListBean(), Serializable {
 
     companion object {
         fun createNoteListBean(entity: NoteEntity) =
