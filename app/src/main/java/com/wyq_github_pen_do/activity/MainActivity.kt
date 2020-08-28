@@ -97,7 +97,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 val factory: Note.Factory =
                     NoteFactory(
                         UUID.randomUUID().toString(),
-                        DefaultNoteConfig.EditMode.EDIT_AUTO_CAN
+                        DefaultNoteConfig.EditMode.EDIT_AUTO_CAN,
+                        mMainViewModel.getMainTabIndex()
                     )
                 val result = NoteDetailScopedService.startWithCoroutine(factory.build())
                 if (result) {
@@ -112,21 +113,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             val noteEntity = NoteEntity(
                 type = NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
                 noteId = UUID.randomUUID().toString(),
-                title =  Random().nextInt(12312).toString(),
+                title = Random().nextInt(12312).toString(),
                 create_date = System.currentTimeMillis().toString(),
                 content = ""
             )
-            lifecycleScope.launch { withContext(Dispatchers.IO){mNoteData.insert(noteEntity)} }
+            lifecycleScope.launch { withContext(Dispatchers.IO) { mNoteData.insert(noteEntity) } }
             Log.d("wqq", "initListener: 添加一个")
+        }
+
+        iv_calender.clickJitter {
+            lifecycleScope.launch { withContext(Dispatchers.IO) { Log.d("wqq","列表: ${mNoteData.findAll(0, 2).toString()}") } }
         }
     }
 
     private suspend fun insertLatestNote() {
-        val note = withContext(Dispatchers.IO){
+        val note = withContext(Dispatchers.IO) {
             mMainViewModel.getLatestNote()?.let { NoteListBean.createNoteListBean(it) }
         }
         if (note != null) {
-            val iNoteFragment = fragments[mMainViewModel.mainTabIndex.value.value()] as INoteFragment
+            val iNoteFragment =
+                fragments[mMainViewModel.mainTabIndex.value.value()] as INoteFragment
             iNoteFragment.insertLatestNote(note)
         }
     }

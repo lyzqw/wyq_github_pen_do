@@ -14,9 +14,12 @@ class NoteListAdapter : PagingDataAdapter<NoteListBean, BaseViewHolder>(NoteList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
             NoteTypeEnum.TYPE_DIARY_STYLE_1.code -> {
-                return DiaryViewHolder.create(parent)
+                return DiaryViewHolder.createStyleLeft(parent)
             }
-            else -> return DiaryViewHolder.create(parent)
+            NoteTypeEnum.TYPE_DIARY_STYLE_2.code -> {
+                return DiaryViewHolder.createStyleRight(parent)
+            }
+            else -> return DiaryViewHolder.createStyleLeft(parent)
         }
     }
 

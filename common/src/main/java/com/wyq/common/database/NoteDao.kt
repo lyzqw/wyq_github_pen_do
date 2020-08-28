@@ -26,4 +26,5 @@ interface NoteDao {
 
     @Query("SELECT * FROM note_table ORDER BY create_date DESC limit 1")
     fun findLatestNote(): NoteEntity?
+
 }

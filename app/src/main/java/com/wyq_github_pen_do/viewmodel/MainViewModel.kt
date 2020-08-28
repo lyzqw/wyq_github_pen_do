@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.wyq.common.base.BaseViewModel
 import com.wyq.common.database.NoteDao
 import com.wyq.common.enum.MainTabEnum
+import com.wyq.common.ext.value
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -41,4 +42,5 @@ class MainViewModel : BaseViewModel(), KoinComponent {
 
     fun getLatestNote() = mNoteData.findLatestNote()
 
+    fun getMainTabIndex() = mainTabIndex.value.value()
 }

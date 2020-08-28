@@ -70,7 +70,13 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
     }
 
     override fun insertLatestNote(note: NoteListBean) {
-        Log.d("wqq", "insertLatestNote: 添加一个新数据")
+        recycler_main.postDelayed({
+            Log.d("wqq", "insertLatestNote: 添加一个新数据")
+            (recycler_main.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                0,
+                SizeUtils.dp2px(60f)
+            )
+        },100)
     }
 
 

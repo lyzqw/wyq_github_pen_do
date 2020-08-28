@@ -8,7 +8,9 @@ import com.bumptech.glide.util.LogTime
 import com.wyq.common.base.BaseViewModel
 import com.wyq.common.database.NoteDao
 import com.wyq.common.database.NoteEntity
+import com.wyq.common.enum.MainTabEnum
 import com.wyq.common.enum.NoteTypeEnum
+import com.wyq.common.ext.value
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
@@ -40,8 +42,8 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
 
 
     fun setHasEditNote(hasEditNote: Boolean) {
-        if(hasEditNote){
-            
+        if (hasEditNote) {
+
         }
         //todo 取出正确的时间
         _hasEditNote.postValue(hasEditNote)
@@ -49,14 +51,16 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
 
     fun saveNoteWhenFinish(
         noteId: String,
+        mainIndex: Int,
         continuation: Continuation<Boolean>?
     ) {
         val hasEdit = hasEditNote.value == true && hasEditContent()
         if (hasEdit) {
             viewModelScope.launch(Dispatchers.IO) {
                 val start = LogTime.getLogTime()
+                val lastNoteEntity = mNoteDao.findLatestNote()
                 val noteEntity = NoteEntity(
-                    type = NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
+                    type = getNoteListType(lastNoteEntity, mainIndex),
                     noteId = noteId,
                     title = noteTitle.value,
                     create_date = System.currentTimeMillis().toString(),
@@ -68,6 +72,36 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
         }
         Timber.d("===saveNoteWhenFinish:  finish")
         continuation?.resume(hasEdit)
+    }
+
+    private fun getNoteListType(lastNoteEntity: NoteEntity?, mainIndex: Int): Int {
+        when (MainTabEnum.get(mainIndex)) {
+            MainTabEnum.TAB_DIARY -> {
+                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_DIARY_STYLE_1) {
+                    return NoteTypeEnum.TYPE_DIARY_STYLE_2.code
+                }
+                return NoteTypeEnum.TYPE_DIARY_STYLE_1.code
+            }
+            MainTabEnum.TAB_NOTE -> {
+                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_NOTE_STYLE_1) {
+                    return NoteTypeEnum.TYPE_NOTE_STYLE_2.code
+                }
+                return NoteTypeEnum.TYPE_NOTE_STYLE_1.code
+            }
+
+            MainTabEnum.TAB_PENDING -> {
+                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_PENDING_STYLE_1) {
+                    return NoteTypeEnum.TYPE_PENDING_STYLE_2.code
+                }
+                return NoteTypeEnum.TYPE_PENDING_STYLE_1.code
+            }
+            MainTabEnum.TAB_SCHEDULE -> {
+                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_SCHEDULE_STYLE_1) {
+                    return NoteTypeEnum.TYPE_SCHEDULE_STYLE_2.code
+                }
+                return NoteTypeEnum.TYPE_SCHEDULE_STYLE_1.code
+            }
+        }
     }
 
     private fun hasEditContent(): Boolean =

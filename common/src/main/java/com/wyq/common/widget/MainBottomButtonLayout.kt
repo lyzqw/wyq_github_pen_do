@@ -60,28 +60,28 @@ class MainBottomButtonLayout : FrameLayout {
 
 
     fun setOnDiaryClickListener(callBack: (Boolean) -> Unit) {
-        tv_diary.clickJitter(50) {
+        tv_diary.setOnClickListener {
             Log.d(TAG, "setOnDiary: ")
             handleTabClickListener(it, callBack, MainTabEnum.TAB_DIARY)
         }
     }
 
     fun setOnNoteClickListener(callBack: (Boolean) -> Unit) {
-        tv_note.clickJitter(50) {
+        tv_note.setOnClickListener {
             Log.d(TAG, "setOnNote: ")
             handleTabClickListener(it, callBack, MainTabEnum.TAB_NOTE)
         }
     }
 
     fun setOnPendingClickListener(callBack: (Boolean) -> Unit) {
-        tv_pending.clickJitter(50) {
+        tv_pending.setOnClickListener {
             Log.d(TAG, "setOnPending: ")
             handleTabClickListener(it, callBack, MainTabEnum.TAB_PENDING)
         }
     }
 
     fun setOnScheduleClickListener(callBack: (Boolean) -> Unit) {
-        tv_schedule.clickJitter(50) {
+        tv_schedule.setOnClickListener {
             Log.d(TAG, "setOnSchedule: ")
             handleTabClickListener(it, callBack, MainTabEnum.TAB_SCHEDULE)
         }

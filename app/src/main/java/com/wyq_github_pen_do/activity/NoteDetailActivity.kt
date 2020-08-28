@@ -18,16 +18,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
 
     private var noteId: String = ""
+    private var mainIndex: Int = 0
     private val mViewModel by viewModel<NoteViewModel>()
 
     companion object {
         const val KEY_NOTE_ID = "key_note_id"
-        const val AUTO_EDIT_NOTE = "auto_edit_note"
+        const val KEY_AUTO_EDIT_NOTE = "auto_edit_note"
+        const val KEY_MAIN_INDEX = "key_main_index"
 
         fun start(config: NoteConfig) {
             val bundle = Bundle().also {
                 it.putString(KEY_NOTE_ID, config.noteId())
-                it.putBoolean(AUTO_EDIT_NOTE, config.autoEditNote())
+                it.putBoolean(KEY_AUTO_EDIT_NOTE, config.autoEditNote())
+                it.putInt(KEY_MAIN_INDEX, config.mainIndex())
             }
             ActivityUtils.startActivity(
                 NoteDetailActivity::class.java,
@@ -40,6 +43,7 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
 
     override fun initView() {
         noteId = intent?.getStringExtra(KEY_NOTE_ID).value()
+        mainIndex = intent?.getIntExtra(KEY_MAIN_INDEX, 0).value()
         supportFragmentManager.beginTransaction()
             .add(R.id.note_container, NoteDetailFragment(), "note_fragment")
             .commitAllowingStateLoss()
@@ -51,7 +55,7 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
 
     override fun finish() {
         super.finish()
-        mViewModel.saveNoteWhenFinish(noteId, NoteDetailScopedService.getContinuation())
+        mViewModel.saveNoteWhenFinish(noteId, mainIndex, NoteDetailScopedService.getContinuation())
     }
 
     override fun initListener() {

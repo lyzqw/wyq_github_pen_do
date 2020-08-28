@@ -5,7 +5,7 @@ import com.wyq.common.base.BaseFragment
 import com.wyq.common.ext.value
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.Listener.SimpleTextWatcherListener
-import com.wyq_github_pen_do.activity.NoteDetailActivity.Companion.AUTO_EDIT_NOTE
+import com.wyq_github_pen_do.activity.NoteDetailActivity.Companion.KEY_AUTO_EDIT_NOTE
 import com.wyq_github_pen_do.databinding.FragmentNoteDetailBinding
 import com.wyq_github_pen_do.viewmodel.NoteViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
@@ -26,7 +26,7 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding>() {
     }
 
     override fun initData() {
-        mViewModel.setHasEditNote(activity?.intent?.getBooleanExtra(AUTO_EDIT_NOTE, true).value())
+        mViewModel.setHasEditNote(activity?.intent?.getBooleanExtra(KEY_AUTO_EDIT_NOTE, true).value())
     }
 
     override fun initListener() {

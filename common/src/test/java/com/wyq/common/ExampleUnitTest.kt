@@ -1,6 +1,7 @@
 package com.wyq.common
 
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -17,6 +18,9 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    val c = ConflatedBroadcastChannel<Int>()
+
     @Test
     fun addition_isCorrect() {
         for (line in 0 until 1) {

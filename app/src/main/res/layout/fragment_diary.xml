@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:paddingTop="80dp"
+            android:paddingTop="60dp"
             android:paddingBottom="50dp"
-            tools:listitem="@layout/item_note_normal"
+            tools:listitem="@layout/item_note_normal_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
