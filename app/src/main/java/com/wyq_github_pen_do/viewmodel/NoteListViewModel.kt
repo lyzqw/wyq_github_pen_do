@@ -1,5 +1,6 @@
 package com.wyq_github_pen_do.viewmodel
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -7,6 +8,7 @@ import androidx.paging.map
 import com.wyq.common.base.BaseViewModel
 import com.wyq.common.database.NoteDao
 import com.wyq.common.database.NoteEntity
+import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.mapper.Mapper
 import com.wyq.common.model.NoteListBean
 import kotlinx.coroutines.flow.map
@@ -30,11 +32,13 @@ class NoteListViewModel(private val mNoteEntity2NoteListMapper: Mapper<NoteEntit
         maxSize = 200 * 10000
     )
 
-    val noteList = Pager(config) {
-        mNoteDao.getDataList()
-    }.flow.map { pagingData: PagingData<NoteEntity> ->
-        pagingData.map { mNoteEntity2NoteListMapper.map(it) }
-    }
+    fun getNoteList(typeList: List<Int>) =
+        Pager(config) {
+            Log.d("wqq", "getNoteList: "+typeList)
+            mNoteDao.findNoteList(typeList)
+        }.flow.map { pagingData: PagingData<NoteEntity> ->
+            pagingData.map { mNoteEntity2NoteListMapper.map(it) }
+        }
 }
 
 

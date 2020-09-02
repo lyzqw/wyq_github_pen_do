@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
 import com.wyq.common.base.BaseFragment
 import com.wyq.common.enum.MainTabEnum
+import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.ext.value
 import com.wyq.common.model.*
 import com.wyq_github_pen_do.R
@@ -55,8 +56,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
 
     override fun initData() {
         lifecycleScope.launch {
-            mViewModel.noteList.collectLatest {
-                Log.d("wqq", "observe: ${it}")
+            mViewModel.getNoteList(NoteTypeEnum.diaryStyle()).collectLatest {
                 noteListAdapter.submitData(lifecycle, it)
             }
         }
@@ -71,7 +71,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
 
     override fun insertLatestNote(note: NoteListBean) {
         recycler_main.postDelayed({
-            Log.d("wqq", "insertLatestNote: 添加一个新数据")
             (recycler_main.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
                 0,
                 SizeUtils.dp2px(60f)

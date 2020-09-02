@@ -14,7 +14,7 @@ class ScheduleFragment : BaseFragment<FragmentNoteDetailBinding>() , INoteFragme
         fun newInstance() = ScheduleFragment()
     }
 
-    override fun layoutId(): Int = R.layout.fragment_note
+    override fun layoutId(): Int = R.layout.fragment_schedule
 
     override fun initView() {
 

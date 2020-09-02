@@ -9,11 +9,8 @@ interface NoteDao {
     @Insert(entity = NoteEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun insert(noteEntity: NoteEntity)
 
-    @Query("SELECT * FROM note_table ORDER BY create_date DESC LIMIT :loadSize OFFSET :position")
-    fun findAll(position: Int, loadSize: Int): List<NoteEntity>
-
-    @Query("SELECT * FROM note_table ORDER BY create_date DESC")
-    fun getDataList(): PagingSource<Int, NoteEntity>
+    @Query("SELECT * FROM note_table where type IN (:typeList) ORDER BY create_date DESC")
+    fun findNoteList(typeList: List<Int>): PagingSource<Int, NoteEntity>
 
     @Delete
     fun delete(vararg noteEntity: NoteEntity)

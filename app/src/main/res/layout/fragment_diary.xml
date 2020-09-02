@@ -18,7 +18,7 @@
             android:clipToPadding="false"
             android:paddingTop="60dp"
             android:paddingBottom="50dp"
-            tools:listitem="@layout/item_note_normal_left"
+            tools:listitem="@layout/item_note_normal_style_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

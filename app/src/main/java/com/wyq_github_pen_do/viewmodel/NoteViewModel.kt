@@ -77,26 +77,26 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
     private fun getNoteListType(lastNoteEntity: NoteEntity?, mainIndex: Int): Int {
         when (MainTabEnum.get(mainIndex)) {
             MainTabEnum.TAB_DIARY -> {
-                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_DIARY_STYLE_1) {
+                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_DIARY_STYLE_1) {
                     return NoteTypeEnum.TYPE_DIARY_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_DIARY_STYLE_1.code
             }
             MainTabEnum.TAB_NOTE -> {
-                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_NOTE_STYLE_1) {
+                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_NOTE_STYLE_1) {
                     return NoteTypeEnum.TYPE_NOTE_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_NOTE_STYLE_1.code
             }
 
             MainTabEnum.TAB_PENDING -> {
-                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_PENDING_STYLE_1) {
+                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_PENDING_STYLE_1) {
                     return NoteTypeEnum.TYPE_PENDING_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_PENDING_STYLE_1.code
             }
             MainTabEnum.TAB_SCHEDULE -> {
-                if (NoteTypeEnum.get(lastNoteEntity?.type) == NoteTypeEnum.TYPE_SCHEDULE_STYLE_1) {
+                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_SCHEDULE_STYLE_1) {
                     return NoteTypeEnum.TYPE_SCHEDULE_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_SCHEDULE_STYLE_1.code

@@ -31,10 +31,21 @@ enum class NoteTypeEnum(val code: Int) {
     TYPE_SCHEDULE_STYLE_2(8);
 
     companion object {
+
         fun get(code: Int?): NoteTypeEnum {
             val type = values().find { it.code == code }
             type ?: throwExceptionWhenDebug("参数错误")
             return type ?: TYPE_DIARY_STYLE_1
         }
+
+        fun diaryStyle(): List<Int> = arrayListOf(TYPE_DIARY_STYLE_1.code, TYPE_DIARY_STYLE_2.code)
+
+        fun noteStyle(): List<Int> = arrayListOf(TYPE_NOTE_STYLE_1.code, TYPE_NOTE_STYLE_2.code)
+
+        fun pendingStyle(): List<Int> = arrayListOf(TYPE_PENDING_STYLE_1.code, TYPE_PENDING_STYLE_2.code)
+
+        fun scheduleStyle(): List<Int> = arrayListOf(TYPE_SCHEDULE_STYLE_1.code, TYPE_SCHEDULE_STYLE_2.code)
+
+        fun allStyle(): List<Int> = values().map { it.code }.toList()
     }
 }

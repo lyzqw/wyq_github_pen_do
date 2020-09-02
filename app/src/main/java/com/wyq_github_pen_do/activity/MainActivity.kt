@@ -115,11 +115,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 content = ""
             )
             lifecycleScope.launch { withContext(Dispatchers.IO) { mNoteData.insert(noteEntity) } }
-            Log.d("wqq", "initListener: 添加一个")
         }
 
         iv_calender.clickJitter {
-            lifecycleScope.launch { withContext(Dispatchers.IO) { Log.d("wqq","列表: ${mNoteData.findAll(0, 2).toString()}") } }
         }
     }
 
