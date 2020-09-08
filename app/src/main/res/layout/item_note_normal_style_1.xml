@@ -1,65 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.wyq.common.widget.SwipeViewFrameLayout
         android:layout_width="match_parent"
+        android:background="@color/white_255"
         android:layout_height="35dp">
 
-
-        <TextView
-            android:id="@+id/tv_note_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/gray_999999"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/image_note_type_logo"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2020-11-15" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_item"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/gray_F6F6F6">
 
 
-        <ImageView
-            android:id="@+id/image_note_type_logo"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tv_note_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/gray_999999"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/image_note_type_logo"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2020-11-15" />
+
+
+            <ImageView
+                android:id="@+id/image_note_type_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_diary_logo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="5dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/gray_999999"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/image_note_type_logo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_note_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/black_333333"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/image_note_type_logo"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="我是标题" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <FrameLayout
+            android:layout_width="79dp"
+            android:background="@color/white_255"
+            android:paddingRight="12dp"
             android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:src="@drawable/icon_diary_logo"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-
-        <View
-            android:id="@+id/view_line"
-            android:layout_width="5dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/gray_999999"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/image_note_type_logo"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/tv_note_content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:gravity="center"
-            android:singleLine="true"
-            android:textColor="@color/black_333333"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/image_note_type_logo"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="我是标题" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/red_D0021B"
+                android:textColor="@color/white_255"
+                android:gravity="center"
+                android:text="删除"
+                android:textSize="14sp" />
+
+        </FrameLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.wyq.common.widget.SwipeViewFrameLayout>
+
 
 </layout>

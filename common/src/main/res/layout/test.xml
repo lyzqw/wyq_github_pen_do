@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_999999">
+
+
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="@color/white_255"
+        android:paddingRight="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/red_D0021B"
+            android:textColor="@color/white_255"
+            android:gravity="center"
+            android:text="删除"
+            android:textSize="108sp" />
+
+    </FrameLayout>
+
+
+</FrameLayout>

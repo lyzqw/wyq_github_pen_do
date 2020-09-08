@@ -11,6 +11,7 @@ import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.Listener.INoteFragment
 import com.wyq_github_pen_do.fragment.DiaryFragment
 import com.wyq_github_pen_do.viewholder.DiaryViewHolder
+import kotlinx.android.synthetic.main.item_note_normal_style_1.view.*
 
 class NoteListAdapter(private val iNoteFragment: INoteFragment) :
     PagingDataAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCallback()) {
@@ -33,7 +34,7 @@ class NoteListAdapter(private val iNoteFragment: INoteFragment) :
         when (holder) {
             is DiaryViewHolder -> {
                 holder.bindData(item)
-                holder.itemView.clickJitter { iNoteFragment.OnItemClickListener(item) }
+                holder.itemView.cl_item.clickJitter { iNoteFragment.OnItemClickListener(item) }
             }
             else -> throwExceptionWhenDebug("This is error holder!")
         }
