@@ -51,6 +51,12 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
         recycler_main.layoutManager = LinearLayoutManager(context)
         noteListAdapter = NoteListAdapter(this)
         recycler_main.adapter = noteListAdapter
+
+        recycler_main.canLoadMore(true)
+
+        recycler_main.setOnLoadMoreListener {
+            Log.d(TAG, "initView: 开始加载更多的数据")
+        }
     }
 
 
@@ -75,7 +81,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
                 0,
                 SizeUtils.dp2px(60f)
             )
-        },100)
+        }, 100)
     }
 
     override fun OnItemClickListener(note: NoteListBean) {

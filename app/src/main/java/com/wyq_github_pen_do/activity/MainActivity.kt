@@ -1,6 +1,5 @@
 package com.wyq_github_pen_do.activity
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ColorUtils
@@ -42,7 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var fragments: List<Fragment>
 
     private val mMainViewModel by viewModel<MainViewModel>()
-    private val mNoteData by inject<NoteDao>()
+    private val mNoteDao by inject<NoteDao>()
 
     override val layoutId: Int = R.layout.activity_main
 
@@ -107,18 +106,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         image_main_search.clickJitter {
-            val noteEntity = NoteEntity(
-                type = NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
-                noteId = UUID.randomUUID().toString(),
-                title = Random().nextInt(12312).toString(),
-                create_date = System.currentTimeMillis().toString(),
-                content = ""
-            )
-            lifecycleScope.launch { withContext(Dispatchers.IO) { mNoteData.insert(noteEntity) } }
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    for (i in 0..20) {
+                        mNoteDao.insert(createNoteEntity())
+                    }
+                }
+            }
         }
 
         iv_calender.clickJitter {
+
         }
+    }
+
+    private fun createNoteEntity(): NoteEntity {
+        val noteEntity = NoteEntity(
+            type = NoteTypeEnum.TYPE_DIARY_STYLE_1.code,
+            noteId = UUID.randomUUID().toString(),
+            title = Random().nextInt(12312).toString(),
+            create_date = System.currentTimeMillis().toString(),
+            content = ""
+        )
+        return noteEntity
     }
 
     private suspend fun insertLatestNote() {
