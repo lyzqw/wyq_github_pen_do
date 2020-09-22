@@ -34,7 +34,6 @@ import java.util.*
 /**
  * 主页
  *
- * todo  换肤,
  */
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 

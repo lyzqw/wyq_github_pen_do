@@ -1,8 +1,11 @@
 package com.wyq_github_pen_do.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.wyq.common.base.BaseViewHolder
 import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.ext.clickJitter
@@ -14,7 +17,9 @@ import com.wyq_github_pen_do.viewholder.DiaryViewHolder
 import kotlinx.android.synthetic.main.item_note_normal_style_1.view.*
 
 class NoteListAdapter(private val iNoteFragment: INoteFragment) :
-    PagingDataAdapter<NoteListBean, BaseViewHolder>(NoteListDiffCallback()) {
+    RecyclerView.Adapter<BaseViewHolder>() {
+
+    private lateinit var dataList: MutableList<NoteListBean>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
@@ -29,8 +34,8 @@ class NoteListAdapter(private val iNoteFragment: INoteFragment) :
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        Log.d("wqq", "onBindViewHolder: 位置 "+position +" 数量: "+itemCount)
         val item = getItem(position)
-        item ?: return
         when (holder) {
             is DiaryViewHolder -> {
                 holder.bindData(item)
@@ -42,7 +47,22 @@ class NoteListAdapter(private val iNoteFragment: INoteFragment) :
 
 
     override fun getItemViewType(position: Int): Int {
-        return getItem(position)?.type ?: 0
+        return getItem(position).type
+    }
+
+    private fun getItem(position: Int) = dataList[position]
+
+    fun setNewData(list: MutableList<NoteListBean>) {
+        this.dataList = list
+    }
+
+    fun addData(list: List<NoteListBean>) {
+        dataList.addAll(list)
+    }
+
+    override fun getItemCount(): Int {
+        if (!::dataList.isInitialized)return 0
+        return dataList.size
     }
 
     class NoteListDiffCallback : DiffUtil.ItemCallback<NoteListBean>() {

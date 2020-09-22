@@ -3,6 +3,7 @@ package com.wyq_github_pen_do.fragment
 import android.graphics.Rect
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,6 @@ import com.blankj.utilcode.util.SizeUtils
 import com.wyq.common.base.BaseFragment
 import com.wyq.common.enum.MainTabEnum
 import com.wyq.common.enum.NoteTypeEnum
-import com.wyq.common.ext.value
 import com.wyq.common.model.*
 import com.wyq_github_pen_do.R
 import com.wyq_github_pen_do.Listener.INoteFragment
@@ -19,10 +19,8 @@ import com.wyq_github_pen_do.coroutine.NoteDetailScopedService
 import com.wyq_github_pen_do.databinding.FragmentDiaryBinding
 import com.wyq_github_pen_do.viewmodel.NoteListViewModel
 import kotlinx.android.synthetic.main.fragment_diary.*
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
@@ -54,21 +52,31 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
 
         recycler_main.canLoadMore(true)
 
-        recycler_main.setOnLoadMoreListener {
-            Log.d(TAG, "initView: 开始加载更多的数据")
-        }
     }
 
 
     override fun initData() {
-        lifecycleScope.launch {
-            mViewModel.getNoteList(NoteTypeEnum.diaryStyle()).collectLatest {
-                noteListAdapter.submitData(lifecycle, it)
+        mViewModel.noteList.observe(this, Observer {
+            Log.d(TAG, "来的数据: "+it.size)
+            if (mViewModel.isRefresh()) {
+                noteListAdapter.setNewData(it.toMutableList())
+            } else {
+                if (it.isEmpty()) {
+                    Log.d(TAG, "没有更多数据")
+                    recycler_main.finishLoadMoreWithNoMoreData()
+                } else {
+                    Log.d(TAG, "加载更多")
+                    recycler_main.finishLoadMore()
+                }
+                noteListAdapter.addData(it)
             }
-        }
+            noteListAdapter.notifyDataSetChanged()
+        })
 
-        noteListAdapter.addLoadStateListener {
-            Timber.tag(TAG).d("addLoadStateListener: ")
+        mViewModel.loadNoteList(NoteTypeEnum.diaryStyle())
+        recycler_main.setOnLoadMoreListener {
+            Log.d(TAG, "initView: 开始加载更多的数据")
+            mViewModel.loadMoreNoteList(NoteTypeEnum.diaryStyle())
         }
     }
 

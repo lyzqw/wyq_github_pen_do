@@ -66,10 +66,10 @@ class PendingFragment : BaseFragment<FragmentPendingBinding>(), INoteFragment {
         lifecycleScope.launch {
             val typeList = NoteTypeEnum.pendingStyle()
             Log.d(TAG, "initData: "+typeList)
-            mViewModel.getNoteList(typeList).collectLatest {
-                Log.d(TAG, "拿到数据: "+it)
-                noteListAdapter.submitData(lifecycle, it)
-            }
+//            mViewModel.getNoteList(typeList).collectLatest {
+//                Log.d(TAG, "拿到数据: "+it)
+//                noteListAdapter.submitData(lifecycle, it)
+//            }
         }
     }
 

@@ -6,6 +6,9 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * 带加载更多recyclerView
+ */
 class SmartRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
 
     companion object {
@@ -15,7 +18,7 @@ class SmartRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(co
     private var mIsBeingDragged: Boolean = false
     private var mEnableLoadMore: Boolean = false
     private var mOnLoadMoreListener: ((RecyclerView) -> Unit)? = null
-    private var preloadPosition = 5
+    private var preloadPosition = 0
 
     init {
 
@@ -44,16 +47,15 @@ class SmartRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(co
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             //上拉
-            if (dy < 0 || mOnLoadMoreListener == null) return
+            if (dy <= 0 || mOnLoadMoreListener == null || !mEnableLoadMore) return
 
             //能上拉
             var lastVisiblePosition = findLastVisibleItemPosition(recyclerView)
 
             Log.d(TAG, "onScrolled.lastVisiblePosition: " + lastVisiblePosition)
-            Log.d(TAG, "onScrolled.itemCount: " + getItemCount(recyclerView))
 
             val shouldLoadMore =
-                lastVisiblePosition > 0 && lastVisiblePosition >= getItemCount(recyclerView) - preloadPosition - 1
+                lastVisiblePosition > 0 && lastVisiblePosition >= getItemCount(recyclerView) - 1 - preloadPosition //预加载
 
 
             //正在上拉
@@ -61,7 +63,7 @@ class SmartRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(co
                 mIsBeingDragged = true
                 mOnLoadMoreListener?.invoke(this@SmartRecyclerView)
             }
-            //预加载
+
         }
 
         private fun findLastVisibleItemPosition(recyclerView: RecyclerView): Int {

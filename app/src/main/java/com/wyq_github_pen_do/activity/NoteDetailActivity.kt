@@ -52,9 +52,6 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
     override fun initView() {
         noteId = intent?.getStringExtra(KEY_NOTE_ID).value()
         mainIndex = intent?.getIntExtra(KEY_MAIN_INDEX, 0).value()
-        val bean = intent!!.getSerializableExtra(KEY_NOTE_BEAN)
-        Log.d("wqq", "initView.noteid: "+noteId)
-        Log.d("wqq", "initView.bean: "+bean)
         supportFragmentManager.beginTransaction()
             .add(R.id.note_container, NoteDetailFragment(), "note_fragment")
             .commitAllowingStateLoss()

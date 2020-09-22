@@ -1,6 +1,5 @@
 package com.wyq.common.database
 
-import androidx.paging.PagingSource
 import androidx.room.*
 
 @Dao
@@ -9,8 +8,8 @@ interface NoteDao {
     @Insert(entity = NoteEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun insert(noteEntity: NoteEntity)
 
-    @Query("SELECT * FROM note_table where type IN (:typeList) ORDER BY create_date DESC")
-    fun findNoteList(typeList: List<Int>): PagingSource<Int, NoteEntity>
+    @Query("SELECT * FROM note_table where type IN (:typeList) ORDER BY create_date DESC LIMIT :loadSize OFFSET :pageSize")
+    fun findAll(typeList: List<Int>, pageSize: Int, loadSize: Int): List<NoteEntity>
 
     @Delete
     fun delete(vararg noteEntity: NoteEntity)
