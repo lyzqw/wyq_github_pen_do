@@ -76,7 +76,7 @@ class FirstTest {
 
     @Test
     fun testEditNote() {
-        onView(withId(R.id.note_title)).perform(ViewActions.replaceText("测试title"))
+        onView(withId(R.id.noteTitle)).perform(ViewActions.replaceText("测试title"))
         onView(withText("NEW 测试title")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 }

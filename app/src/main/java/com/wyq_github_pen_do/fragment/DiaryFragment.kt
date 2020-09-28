@@ -57,7 +57,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
 
     override fun initData() {
         mViewModel.noteList.observe(this, Observer {
-            Log.d(TAG, "来的数据: "+it.size)
+            Log.d(TAG, "来的数据: " + it.size)
             if (mViewModel.isRefresh()) {
                 noteListAdapter.setNewData(it.toMutableList())
             } else {
@@ -74,6 +74,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
         })
 
         mViewModel.loadNoteList(NoteTypeEnum.diaryStyle())
+
         recycler_main.setOnLoadMoreListener {
             Log.d(TAG, "initView: 开始加载更多的数据")
             mViewModel.loadMoreNoteList(NoteTypeEnum.diaryStyle())
@@ -84,6 +85,9 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(), INoteFragment {
     }
 
     override fun insertLatestNote(note: NoteListBean) {
+        Log.d("wqq", "insertLatestNote: insert")
+        noteListAdapter.addData(0, note)
+
         recycler_main.postDelayed({
             (recycler_main.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
                 0,

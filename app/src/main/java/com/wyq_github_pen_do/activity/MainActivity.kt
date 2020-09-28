@@ -25,6 +25,7 @@ import com.wyq_github_pen_do.fragment.ScheduleFragment
 import com.wyq_github_pen_do.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.include_main_layer.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
@@ -98,6 +99,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 val result = NoteDetailScopedService.startWithCoroutine(factory.build())
                 if (result) {
                     lifecycleScope.launch {
+                        delay(1000)
                         insertLatestNote()
                     }
                 }
@@ -115,7 +117,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         iv_calender.clickJitter {
-
+            lifecycleScope.launch {
+                insertLatestNote()
+            }
         }
     }
 

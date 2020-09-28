@@ -23,30 +23,23 @@ import kotlin.coroutines.resume
  * 编辑便签
  */
 class NoteViewModel : BaseViewModel(), KoinComponent {
-
-    private val mNoteDao by inject<NoteDao>()
-
-    private var _hasEditNote = MutableLiveData<Boolean>()
-    private val hasEditNote: LiveData<Boolean> = _hasEditNote
-
     //日期
     private var _noteDate = MutableLiveData<String>()
     val noteDate: LiveData<String> = _noteDate
 
-    val noteTitle = MutableLiveData<String>()
-    val noteContent = MutableLiveData<String>()
+    //标题头
+    var _noteTitle = MutableLiveData<String>()
 
-    init {
-        _noteDate.postValue(TimeUtils.getNowString())
-    }
+    //编辑的内容
+    var _noteContent = MutableLiveData<String>()
 
+    private var _canAutoEdit = MutableLiveData<Boolean>()
+    val canAutoEdit: LiveData<Boolean> = _canAutoEdit
 
-    fun setHasEditNote(hasEditNote: Boolean) {
-        if (hasEditNote) {
+    private val mNoteDao by inject<NoteDao>()
 
-        }
-        //todo 取出正确的时间
-        _hasEditNote.postValue(hasEditNote)
+    fun setCanAutoEdit(canAutoEdit: Boolean) {
+        _canAutoEdit.value = canAutoEdit
     }
 
     fun saveNoteWhenFinish(
@@ -54,7 +47,7 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
         mainIndex: Int,
         continuation: Continuation<Boolean>?
     ) {
-        val hasEdit = hasEditNote.value == true && hasEditContent()
+        val hasEdit = canAutoEdit.value == true && hasEditContent()
         if (hasEdit) {
             viewModelScope.launch(Dispatchers.IO) {
                 val start = LogTime.getLogTime()
@@ -62,9 +55,9 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
                 val noteEntity = NoteEntity(
                     type = getNoteListType(lastNoteEntity, mainIndex),
                     noteId = noteId,
-                    title = noteTitle.value,
+                    title = _noteTitle.value,
                     create_date = System.currentTimeMillis().toString(),
-                    content = noteContent.value
+                    content = _noteContent.value
                 )
                 mNoteDao.insert(noteEntity)
                 Timber.d("===saveNoteWhenFinish.耗时:  ${LogTime.getElapsedMillis(start)}")
@@ -77,26 +70,26 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
     private fun getNoteListType(lastNoteEntity: NoteEntity?, mainIndex: Int): Int {
         when (MainTabEnum.get(mainIndex)) {
             MainTabEnum.TAB_DIARY -> {
-                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_DIARY_STYLE_1) {
+                if (lastNoteEntity != null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_DIARY_STYLE_1) {
                     return NoteTypeEnum.TYPE_DIARY_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_DIARY_STYLE_1.code
             }
             MainTabEnum.TAB_NOTE -> {
-                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_NOTE_STYLE_1) {
+                if (lastNoteEntity != null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_NOTE_STYLE_1) {
                     return NoteTypeEnum.TYPE_NOTE_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_NOTE_STYLE_1.code
             }
 
             MainTabEnum.TAB_PENDING -> {
-                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_PENDING_STYLE_1) {
+                if (lastNoteEntity != null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_PENDING_STYLE_1) {
                     return NoteTypeEnum.TYPE_PENDING_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_PENDING_STYLE_1.code
             }
             MainTabEnum.TAB_SCHEDULE -> {
-                if (lastNoteEntity!=null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_SCHEDULE_STYLE_1) {
+                if (lastNoteEntity != null && NoteTypeEnum.get(lastNoteEntity.type) == NoteTypeEnum.TYPE_SCHEDULE_STYLE_1) {
                     return NoteTypeEnum.TYPE_SCHEDULE_STYLE_2.code
                 }
                 return NoteTypeEnum.TYPE_SCHEDULE_STYLE_1.code
@@ -105,7 +98,23 @@ class NoteViewModel : BaseViewModel(), KoinComponent {
     }
 
     private fun hasEditContent(): Boolean =
-        noteTitle.value?.isNotEmpty() == true || noteContent.value?.isNotEmpty() == true
+        _noteTitle.value?.isNotEmpty() == true || _noteContent.value?.isNotEmpty() == true
+
+    fun setNoteTitle(title: String) {
+        _noteTitle.value = title
+    }
+
+    fun setNoteContent(content: String) {
+        _noteContent.value = content
+    }
+
+    fun setNoteTitleCreateDate(canAutoEdit: Boolean, date: String) {
+        if (canAutoEdit) {
+            _noteDate.value = TimeUtils.getNowString()
+        } else {
+            _noteDate.value = TimeUtils.millis2String(date.toLongOrNull().value())
+        }
+    }
 
     fun loadData() {
 

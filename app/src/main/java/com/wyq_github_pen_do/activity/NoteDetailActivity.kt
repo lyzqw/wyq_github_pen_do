@@ -32,7 +32,6 @@ class NoteDetailActivity : BaseActivity<ActivityNoteBinding>() {
         const val KEY_NOTE_BEAN = "key_note_bean"
 
         fun start(config: NoteConfig) {
-            Log.d("wqq", "start: "+config.getPreviewNote())
             val bundle = Bundle().also {
                 it.putString(KEY_NOTE_ID, config.noteId())
                 it.putBoolean(KEY_AUTO_EDIT_NOTE, config.autoEditNote())

@@ -5,10 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
-import android.text.Editable
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
 import android.util.AttributeSet
+import android.util.Log
 import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.SizeUtils
 import timber.log.Timber
@@ -17,6 +16,7 @@ class NoteTitleEditView : AppCompatEditText {
 
     private var paint: Paint = Paint()
     private var rect = Rect()
+    private var noteTileEditListener: NoteTileEditListener? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -37,6 +37,9 @@ class NoteTitleEditView : AppCompatEditText {
         paint.color = Color.BLACK
         paint.strokeWidth = SizeUtils.dp2px(1f).toFloat()
         addTextChangedListener(InnerTextChanged())
+
+
+        filters = arrayOf(EnterNewLineInputFilter());
     }
 
 
@@ -64,14 +67,39 @@ class NoteTitleEditView : AppCompatEditText {
             Timber.d("beforeTextChanged ${s.toString()}")
         }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            Timber.d("onTextChanged ${s.toString()}")
-
-            Timber.d("onTextChanged.lineCount: $lineCount")
+        override fun onTextChanged(string: CharSequence, start: Int, before: Int, count: Int) {
             if (lineCount > 3) {
                 text?.delete(selectionEnd - 1, selectionStart)
             }
         }
+    }
+
+    interface NoteTileEditListener {
+        fun onTextChanged(newLine: Boolean)
+    }
+
+    fun setNoteTileEditListener(listener: NoteTileEditListener) {
+        this.noteTileEditListener = listener
+    }
+
+    inner class EnterNewLineInputFilter : InputFilter {
+        override fun filter(
+            string: CharSequence,
+            start: Int,
+            end: Int,
+            dest: Spanned?,
+            dstart: Int,
+            dend: Int
+        ): CharSequence? {
+            val newLine = string.isNotEmpty() && string[string.length - 1] == '\n'
+            noteTileEditListener?.onTextChanged(newLine)
+            if (newLine) {
+                Log.d("wqq", "filter: 换行")
+                return ""
+            }
+            return null
+        }
+
     }
 }
 

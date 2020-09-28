@@ -20,7 +20,7 @@
 
 
         <TextView
-            android:id="@+id/tv_note_content"
+            android:id="@+id/tvNoteContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"

@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.wyq.common.base.BaseListAdapter
 import com.wyq.common.base.BaseViewHolder
 import com.wyq.common.enum.NoteTypeEnum
 import com.wyq.common.ext.clickJitter
@@ -17,9 +18,8 @@ import com.wyq_github_pen_do.viewholder.DiaryViewHolder
 import kotlinx.android.synthetic.main.item_note_normal_style_1.view.*
 
 class NoteListAdapter(private val iNoteFragment: INoteFragment) :
-    RecyclerView.Adapter<BaseViewHolder>() {
+    BaseListAdapter<BaseViewHolder,NoteListBean>() {
 
-    private lateinit var dataList: MutableList<NoteListBean>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
@@ -53,20 +53,19 @@ class NoteListAdapter(private val iNoteFragment: INoteFragment) :
     private fun getItem(position: Int) = dataList[position]
 
     fun setNewData(list: MutableList<NoteListBean>) {
-        this.dataList = list
+        dataList = list
     }
 
     fun addData(list: List<NoteListBean>) {
         dataList.addAll(list)
     }
 
+
     override fun getItemCount(): Int {
-        if (!::dataList.isInitialized)return 0
         return dataList.size
     }
 
     class NoteListDiffCallback : DiffUtil.ItemCallback<NoteListBean>() {
-
         override fun areItemsTheSame(oldItem: NoteListBean, newItem: NoteListBean): Boolean =
             oldItem.noteId == newItem.noteId
 

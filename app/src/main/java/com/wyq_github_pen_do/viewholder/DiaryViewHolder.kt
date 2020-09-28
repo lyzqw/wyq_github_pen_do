@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.TimeUtils
 import com.wyq.common.base.BaseViewHolder
-import com.wyq.common.ext.clickJitter
 import com.wyq.common.ext.value
 import com.wyq.common.model.NoteListBean
 import com.wyq_github_pen_do.databinding.ItemNoteNormalStyle1Binding
@@ -17,7 +16,7 @@ class DiaryViewHolder(private val rootView: View) : BaseViewHolder(rootView) {
 
 
     fun bindData(noteListBean: NoteListBean) {
-        rootView.tv_note_content.text =
+        rootView.tvNoteContent.text =
             if (noteListBean.content.isNullOrEmpty()) noteListBean.title.value() else noteListBean.content.value()
 
         val noteCreateDateMs = noteListBean.create_date?.toLongOrNull().value()
