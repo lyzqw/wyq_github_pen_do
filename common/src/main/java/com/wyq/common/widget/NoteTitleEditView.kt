@@ -94,7 +94,6 @@ class NoteTitleEditView : AppCompatEditText {
             val newLine = string.isNotEmpty() && string[string.length - 1] == '\n'
             noteTileEditListener?.onTextChanged(newLine)
             if (newLine) {
-                Log.d("wqq", "filter: 换行")
                 return ""
             }
             return null

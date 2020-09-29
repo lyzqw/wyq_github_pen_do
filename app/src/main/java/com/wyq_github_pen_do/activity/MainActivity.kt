@@ -116,11 +116,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
-        iv_calender.clickJitter {
-            lifecycleScope.launch {
-                insertLatestNote()
-            }
-        }
+        iv_calender.clickJitter {}
     }
 
     private fun createNoteEntity(): NoteEntity {
