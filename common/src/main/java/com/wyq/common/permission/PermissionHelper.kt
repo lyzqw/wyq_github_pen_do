@@ -3,6 +3,8 @@ package com.wyq.common.permission
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Message
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import androidx.fragment.app.Fragment
@@ -13,7 +15,9 @@ import kotlin.coroutines.resume
 object PermissionHelper {
 
     private val pendingRequestManagerFragments = HashMap<FragmentManager, PermissionFragment>()
-    private val handler = Handler(Looper.getMainLooper())
+    private val handler = PermissionHandler()
+    private const val REMOVE = 1
+
 
     suspend fun requestPermissions(
         activity: AppCompatActivity,
@@ -39,16 +43,21 @@ object PermissionHelper {
                     supportFragmentManager.beginTransaction()
                         .add(fragment, "PermissionFragmentTag")
                         .commitAllowingStateLoss()
-                    handler.obtainMessage().sendToTarget()
+                    handler.obtainMessage(REMOVE, supportFragmentManager).sendToTarget()
                 }
             }
-
-
         }
-
     }
 
-
+    class PermissionHandler : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            var removed: Any? = null
+            if (msg.what == REMOVE) {
+                removed = pendingRequestManagerFragments.remove(msg.obj)
+            }
+            Log.d("wqq", "handleMessage.removed: "+removed)
+        }
+    }
 }
 
 
